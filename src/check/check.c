@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
+/*   Updated: 2023/10/10 15:54:03 by lsaba-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:31:44 by lsaba-qu          #+#    #+#             */
@@ -10,15 +22,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cube.h"
 
 void	check_extension(char *path)
 {
 	int	len;
 
 	len = ft_strlen(path);
-	if (len < 5 || ft_strcmp(&path[len - 4], ".ber"))
-		error("invalid file extension, use .ber");
+	if (len < 5 || ft_strcmp(&path[len - 4], ".cub"))
+		error("invalid file extension, use .cub");
 }
 
 int	check_elements(char c, t_game *game)

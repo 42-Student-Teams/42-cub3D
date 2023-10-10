@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
+/*   Updated: 2023/10/10 15:47:56 by lsaba-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:31:57 by lsaba-qu          #+#    #+#             */
@@ -10,7 +22,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cube.h"
 
 void	generate_map(t_game *game, int fd, char *temp)
 {
@@ -80,5 +92,19 @@ int	draw_map(t_game *game)
 				game->sprites[game->map[y][x]].img, x * 96, y * 96);
 		}
 	}
+	return (0);
+}
+
+int init_game(t_game *game)
+{
+	game->window.mlx = mlx_init();
+	if (game->window.mlx == NULL)
+		exit(EXIT_FAILURE);
+	game->window.win = mlx_new_window(game->window.mlx,
+									  game->size.x * 96, game->size.y * 96, "./cube3D");
+	if (!game->window.win)
+		exit(EXIT_FAILURE);
+	init_sprites(game);
+	draw_map(game);
 	return (0);
 }

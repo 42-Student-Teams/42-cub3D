@@ -1,4 +1,4 @@
-NAME	= so_long
+NAME	= cub3D
 
 #------------------------------------------------#
 #   INGREDIENTS                                  #
@@ -30,11 +30,12 @@ INCS        := include		\
 
 SRC_DIR     := src
 SRCS		:= \
-	src/main.c		\
-	src/message.c		\
-	src/check.c		\
-	src/init.c		\
-	src/hook.c
+	src/main.c						\
+	src/message.c					\
+	src/init.c						\
+	src/check/check.c				\
+	src/movement/hook.c				\
+	src/parse/parse_map.c			\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
+/*   Updated: 2023/10/10 15:28:25 by lsaba-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:31:52 by lsaba-qu          #+#    #+#             */
@@ -10,7 +22,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cube.h"
 
 int	hook_exit(t_game *game)
 {	
@@ -53,7 +65,7 @@ int	hook_move(t_vector new_pos, t_game *game)
 	if (game->map[new_pos.y][new_pos.x] == EXIT)
 	{
 		game->playerpos = new_pos;
-		print_msg("You won !", game);
+//		print_msg("You won !", game);
 		draw_map(game);
 		end_program(game);
 	}
@@ -61,6 +73,6 @@ int	hook_move(t_vector new_pos, t_game *game)
 	game->playerpos = new_pos;
 	draw_map(game);
 	game->moves++;
-	print_msg("Number of steps: ", game);
+//	print_msg("Number of steps: ", game);
 	return (0);
 }

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   message.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
+/*   Updated: 2023/10/10 15:54:57 by lsaba-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   message.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:31:48 by lsaba-qu          #+#    #+#             */
@@ -10,7 +22,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "cube.h"
 
 void	error(char *message)
 {
@@ -28,22 +40,6 @@ void	arg_error(int ac)
 		error("too few arguments");
 	else
 		error("too many arguments");
-}
-
-void	print_msg(char *message, t_game *game)
-{
-	if (message)
-	{
-		ft_putstr_fd("So_long: : ", 2);
-		if (game->item == game->item_count
-			&& game->map[game->playerpos.y][game->playerpos.x] == EXIT)
-			ft_putendl_fd(message, 2);
-		else
-		{
-			ft_putstr_fd(message, 2);
-			ft_putnbrendl_fd(game->moves, 1);
-		}
-	}
 }
 
 void	end_program(t_game *game)
