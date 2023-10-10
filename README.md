@@ -1,1 +1,1 @@
-# Cube-3D
+# cub3d
