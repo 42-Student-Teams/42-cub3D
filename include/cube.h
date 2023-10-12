@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 17:04:13 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:05:42 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 # include <math.h>
 
 
-t_vector	init_map_size(char *path);
+int			init_map_size(char *path);
+int			get_nb_cols_map(char *path, t_game *game);
 void		parse_map(char *path, t_game *game);
 void		check_extension(char *path);
 void		error(char *message);
