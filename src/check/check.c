@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 15:54:03 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:56:10 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,33 @@ void	check_extension(char *path)
 		error("invalid file extension, use .cub");
 }
 
+int	check_player(char c)
+{
+	if (c == 'N')
+		return (PLAYER_N);
+	else if (c == 'S')
+		return (PLAYER_S);
+	else if (c == 'E')
+		return (PLAYER_E);
+	else if (c == 'W')
+		return (PLAYER_W);
+	return (-1);
+}
+
 int	check_elements(char c, t_game *game)
 {
 	if (c == '0')
 		return (EMPTY);
+	if (c == ' ')
+		return (SPACE);
 	else if (c == '1')
 		return (WALL);
 	else if (c == 'C' && ++game->item)
 		return (ITEMS);
 	else if (c == 'E' && ++game->exit)
 		return (EXIT);
-	else if (c == 'P' && ++game->players)
-		return (PLAYER);
+	else if ((c == 'N' | c == 'S' | c == 'E' | c == 'W') && ++game->players)
+		return (check_player(c));
 	else
 		error("invalid character or characters");
 	return (-1);

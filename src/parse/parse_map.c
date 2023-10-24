@@ -6,35 +6,13 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/12 18:18:34 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/24 20:03:07 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	parse_map(char *path, t_game *game)
-{
-//	int		fd;
-//	char	*temp;
-
-	check_extension(path);
-	game->size.y = init_map_size(path);
-	printf("size.y = %d\n", game->size.y);
-	game->map = ft_allok(game->size.y, sizeof(int *), 1);
-	(path, game);
-
-//
-//	if (game->size.y < 4 || game->size.x < 4)
-//		error("Map can't be generated");
-//	generate_map(game, fd, temp);
-//	check_min_amount(game);
-//	check_wall(game);
-//	game->exit = 0;
-//	check_is_solvable(game->playerpos.x, game->playerpos.y, game);
-//	check_valid_path(game);
-}
-
-static char  *check_fd(int fd, char *tmp)
+static char	*check_fd(int fd, char *tmp)
 {
 	tmp = ft_get_next_line(fd);
 	if (!tmp)
@@ -42,53 +20,93 @@ static char  *check_fd(int fd, char *tmp)
 	return (tmp);
 }
 
-int (char *path, t_game *game)
+static int	max_line_len(char *tmp, int max)
 {
-	int		fd;
-	char	*tmp;
-	int		cpt;
-	int		i;
+	if ((int)ft_strlen(tmp) > max)
+		max = ft_strlen(tmp);
+	return (max);
+}
 
-	cpt = 0;
-	i = 0;
-	tmp = NULL;
+static int	check_open_fd(char *path, int fd)
+{
 	fd = open(path, O_RDONLY);
-	tmp = check_fd(fd, tmp);
-	while (tmp != 0)
+	if (fd == -1)
+		error("File not found");
+	return (fd);
+}
+
+static void	print_map(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < game->size.y)
+	{
+		x = 0;
+		while (x < game->size.x)
+		{
+			printf("%d", game->map[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
+
+static char	*skip_to_map(int fd, char *tmp)
+{
+	while (tmp)
 	{
 		if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == '2' || tmp[0] == ' ')
-		{
-			cpt = ft_strlen(tmp) - 1;
-			game->map[i] = ft_allok(cpt, sizeof(int *), 1);
-			i ++;
-		}
+			return (tmp) ;
 		free(tmp);
 		tmp = ft_get_next_line(fd);
 	}
-	if(tmp)
-		free(tmp);
-	close(fd);
-	return (cpt);
+	return (NULL);
 }
 
-int	init_map_size(char *path)
+void	parse_map(char *path, t_game *game)
+{
+	int fd;
+	char *temp;
+
+	fd = 0;
+	temp = NULL;
+	check_extension(path);
+	game->size.y = init_map_size(path, game);
+//	printf("SIZE x > %d\n", game->size.x);
+	game->map = ft_allok(game->size.y, sizeof(int *), 1);
+	fd = check_open_fd(path, fd);
+	temp = check_fd(fd, temp);
+	temp = skip_to_map(fd, temp);
+	generate_map(game, fd, temp);
+	print_map(game);
+}
+
+
+
+int	init_map_size(char *path, t_game *game)
 {
 	int		fd;
 	char	*tmp;
 	int		cpt;
 
 	tmp = NULL;
-	fd = open(path, O_RDONLY);
+	fd = 0;
+	fd = check_open_fd(path, fd);
 	tmp = check_fd(fd, tmp);
 	cpt = 0;
 	while (tmp)
 	{
 		if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == '2' || tmp[0] == ' ')
+		{
+			game->size.x = max_line_len(tmp, game->size.x);
 			cpt++;
+		}
 		free(tmp);
 		tmp = ft_get_next_line(fd);
 	}
 	close(fd);
-//	printf("cpt = %d\n", cpt);
 	return (cpt);
 }

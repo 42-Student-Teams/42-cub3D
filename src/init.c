@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 15:47:56 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/24 20:18:10 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 
 #include "cube.h"
 
+static int	is_player(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	return (0);
+}
 void	generate_map(t_game *game, int fd, char *temp)
 {
 	int	x;
@@ -32,14 +38,14 @@ void	generate_map(t_game *game, int fd, char *temp)
 	y = 0;
 	while (temp)
 	{
-		if ((int)ft_strlen(temp) - 1 != game->size.x)
-			error("Error initializing the map");
 		x = -1;
 		game->map[y] = ft_allok(game->size.x, sizeof(int), 1);
 		while (++x < game->size.x)
 		{
+			if (temp[x] == '\n')
+				break ;
 			game->map[y][x] = check_elements(temp[x], game);
-			if (game->map[y][x] == PLAYER)
+			if (is_player(game->map[y][x]))
 			{
 				game->playerpos.x = x;
 				game->playerpos.y = y;
@@ -49,20 +55,7 @@ void	generate_map(t_game *game, int fd, char *temp)
 		y ++;
 		temp = ft_get_next_line(fd);
 	}
-}
-
-void	init_sprites(t_game *game)
-{
-	game->sprites[WALL] = init_image(game->window.mlx,
-			"sprites/sprite-wall.xpm");
-	game->sprites[EXIT] = init_image(game->window.mlx,
-			"sprites/sprite-exit.xpm");
-	game->sprites[EMPTY] = init_image(game->window.mlx,
-			"sprites/sprite-empty.xpm");
-	game->sprites[PLAYER] = init_image(game->window.mlx,
-			"sprites/sprite-player-gs-stand.xpm");
-	game->sprites[ITEMS] = init_image(game->window.mlx,
-			"sprites/sprite-items.xpm");
+	close(fd);
 }
 
 t_canvas	init_image(void *mlx, char *filepath)
@@ -75,36 +68,50 @@ t_canvas	init_image(void *mlx, char *filepath)
 	return (img);
 }
 
-int	draw_map(t_game *game)
-{
-	int	x;
-	int	y;
+//void	init_sprites(t_game *game)
+//{
+//	game->sprites[WALL] = init_image(game->window.mlx,
+//			"sprites/sprite-wall.xpm");
+//	game->sprites[EXIT] = init_image(game->window.mlx,
+//			"sprites/sprite-exit.xpm");
+//	game->sprites[EMPTY] = init_image(game->window.mlx,
+//			"sprites/sprite-empty.xpm");
+//	game->sprites[PLAYER] = init_image(game->window.mlx,
+//			"sprites/sprite-player-gs-stand.xpm");
+//	game->sprites[ITEMS] = init_image(game->window.mlx,
+//			"sprites/sprite-items.xpm");
+//}
 
-	y = -1;
-	while (++y < game->size.y)
-	{
-		x = -1;
-		while (++x < game->size.x)
-		{
-			mlx_put_image_to_window(game->window.mlx, game->window.win,
-				game->sprites[EMPTY].img, x * 96, y * 96);
-			mlx_put_image_to_window(game->window.mlx, game->window.win,
-				game->sprites[game->map[y][x]].img, x * 96, y * 96);
-		}
-	}
-	return (0);
-}
+//int	draw_map(t_game *game)
+//{
+//	int	x;
+//	int	y;
+//
+//	y = -1;
+//	while (++y < game->size.y)
+//	{
+//		x = -1;
+//		while (++x < game->size.x)
+//		{
+//			mlx_put_image_to_window(game->window.mlx, game->window.win,
+//				game->sprites[EMPTY].img, x * 96, y * 96);
+//			mlx_put_image_to_window(game->window.mlx, game->window.win,
+//				game->sprites[game->map[y][x]].img, x * 96, y * 96);
+//		}
+//	}
+//	return (0);
+//}
 
-int init_game(t_game *game)
-{
-	game->window.mlx = mlx_init();
-	if (game->window.mlx == NULL)
-		exit(EXIT_FAILURE);
-	game->window.win = mlx_new_window(game->window.mlx,
-									  game->size.x * 96, game->size.y * 96, "./cube3D");
-	if (!game->window.win)
-		exit(EXIT_FAILURE);
-	init_sprites(game);
-	draw_map(game);
-	return (0);
-}
+//int init_game(t_game *game)
+//{
+//	game->window.mlx = mlx_init();
+//	if (game->window.mlx == NULL)
+//		exit(EXIT_FAILURE);
+//	game->window.win = mlx_new_window(game->window.mlx,
+//									  game->size.x * 96, game->size.y * 96, "./cube3D");
+//	if (!game->window.win)
+//		exit(EXIT_FAILURE);
+//	init_sprites(game);
+//	draw_map(game);
+//	return (0);
+//}

@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 15:49:25 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:32:51 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ enum
 	EMPTY,
 	ITEMS,
 	EXIT,
-	PLAYER,
+	PLAYER_N,
+	PLAYER_E,
+	PLAYER_S,
+	PLAYER_W,
+	SPACE,
 	WALL,
 };
 
@@ -56,7 +60,7 @@ typedef struct s_game
 	int			moves;
 	int			exit;
 	int			players;
-	t_canvas	sprites[5];
+//	t_canvas	sprites[5];
 }	t_game;
 
 #endif
