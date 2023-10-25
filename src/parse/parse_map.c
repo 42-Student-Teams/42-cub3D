@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/24 20:03:07 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:31:57 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	check_open_fd(char *path, int fd)
 	return (fd);
 }
 
+
 static void	print_map(t_game *game)
 {
 	int	x;
@@ -59,7 +60,7 @@ static char	*skip_to_map(int fd, char *tmp)
 	while (tmp)
 	{
 		if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == '2' || tmp[0] == ' ')
-			return (tmp) ;
+			return (tmp);
 		free(tmp);
 		tmp = ft_get_next_line(fd);
 	}
@@ -81,6 +82,7 @@ void	parse_map(char *path, t_game *game)
 	temp = check_fd(fd, temp);
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
+	printf("%d\n", game->map[0][24]);
 	print_map(game);
 }
 

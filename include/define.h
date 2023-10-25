@@ -6,24 +6,23 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/24 19:32:51 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:55:37 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
 
-enum
+enum e_elements
 {
 	EMPTY,
+	WALL,
 	ITEMS,
 	EXIT,
 	PLAYER_N,
 	PLAYER_E,
 	PLAYER_S,
 	PLAYER_W,
-	SPACE,
-	WALL,
 };
 
 typedef struct s_canvas

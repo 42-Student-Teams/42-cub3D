@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/24 19:56:10 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:27:06 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,11 @@ int	check_elements(char c, t_game *game)
 {
 	if (c == '0')
 		return (EMPTY);
-	if (c == ' ')
-		return (SPACE);
-	else if (c == '1')
-		return (WALL);
-	else if (c == 'C' && ++game->item)
-		return (ITEMS);
-	else if (c == 'E' && ++game->exit)
-		return (EXIT);
 	else if ((c == 'N' | c == 'S' | c == 'E' | c == 'W') && ++game->players)
 		return (check_player(c));
-	else
-		error("invalid character or characters");
+	else if (c != ' '  || c != '1')
+		return (WALL);
+	error("invalid character or characters");
 	return (-1);
 }
 
