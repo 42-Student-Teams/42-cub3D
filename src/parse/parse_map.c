@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/25 18:31:57 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:51:38 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,24 @@ static int	check_open_fd(char *path, int fd)
 }
 
 
-static void	print_map(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < game->size.y)
-	{
-		x = 0;
-		while (x < game->size.x)
-		{
-			printf("%d", game->map[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
+//static void	print_map(t_game *game)
+//{
+//	int	x;
+//	int	y;
+//
+//	y = 0;
+//	while (y < game->size.y)
+//	{
+//		x = 0;
+//		while (x < game->size.x)
+//		{
+//			printf("%i", game->map[y][x]);
+//			x++;
+//		}
+//		printf("\n");
+//		y++;
+//	}
+//}
 
 static char	*skip_to_map(int fd, char *tmp)
 {
@@ -76,14 +76,13 @@ void	parse_map(char *path, t_game *game)
 	temp = NULL;
 	check_extension(path);
 	game->size.y = init_map_size(path, game);
-//	printf("SIZE x > %d\n", game->size.x);
 	game->map = ft_allok(game->size.y, sizeof(int *), 1);
 	fd = check_open_fd(path, fd);
 	temp = check_fd(fd, temp);
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
-	printf("%d\n", game->map[0][24]);
-	print_map(game);
+//	printf("%d\n", game->map[0][24]);
+//	print_map(game);
 }
 
 

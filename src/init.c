@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/25 18:43:58 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:21:41 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,37 @@ static int	is_player(char c)
 //	}
 //}
 
-static void	line_fill_wall(t_game *game, int y, int x)
+static char	*line_fill_wall(t_game *game, char **temp)
 {
 	int i;
+	int len;
+	char *new;
 
-	i = 0;
-	(void)
-	while (i < game->size.x)
+	i = -1;
+	len = (int)ft_strlen(*temp) +  game->size.x;
+	new = ft_calloc(len, sizeof(char));
+	if (!new)
+		error("Malloc error");
+	while (++i < (int)ft_strlen(*temp))
+		new[i] = *temp[i];
+	if (temp)
+		free(temp);
+	while (i < len)
 	{
-		game->map[y][i] = WALL;
+		new[i] = '1';
 		i++;
 	}
+	return (new);
 }
 
 void	generate_map(t_game *game, int fd, char *temp)
 {
 	int	x;
 	int	y;
+	char *new_line;
 
 	y = 0;
-
+	new_line = NULL;
 	while (temp)
 	{
 		x = -1;
@@ -70,26 +81,28 @@ void	generate_map(t_game *game, int fd, char *temp)
 		while (++x < game->size.x)
 		{
 			if ((int)ft_strlen(temp) != game->size.x)
-				line_fill_wall(game, temp);
-			printf("%s\n", game);
-			if (temp[x] == '\n')
+				new_line = line_fill_wall(game, &temp);
+			printf("%s\n", new_line);
+			if (new_line[x] == '\n')
 				break ;
-			game->map[y][x] = check_elements(temp[x], game);
+			game->map[y][x] = check_elements(new_line[x], game);
 			if (is_player(game->map[y][x]))
 			{
 				game->playerpos.x = x;
 				game->playerpos.y = y;
 			}
 		}
-		if (temp[x] == '\n')
+		if (new_line[x] == '\n')
 			break ;
-		free(temp);
+		free(new_line);
 
 		y ++;
 		temp = ft_get_next_line(fd);
 	}
 	if (temp)
 		free(temp);
+	if (new_line)
+		free(new_line);
 	close(fd);
 }
 
