@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/25 20:51:38 by leon             ###   ########.fr       */
+/*   Updated: 2023/10/27 16:22:10 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,24 @@ static int	check_open_fd(char *path, int fd)
 }
 
 
-//static void	print_map(t_game *game)
-//{
-//	int	x;
-//	int	y;
-//
-//	y = 0;
-//	while (y < game->size.y)
-//	{
-//		x = 0;
-//		while (x < game->size.x)
-//		{
-//			printf("%i", game->map[y][x]);
-//			x++;
-//		}
-//		printf("\n");
-//		y++;
-//	}
-//}
+static void	print_map(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < game->size.y)
+	{
+		x = 0;
+		while (x < game->size.x)
+		{
+			printf("%i", game->map[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
 
 static char	*skip_to_map(int fd, char *tmp)
 {
@@ -65,6 +65,20 @@ static char	*skip_to_map(int fd, char *tmp)
 		tmp = ft_get_next_line(fd);
 	}
 	return (NULL);
+}
+
+static void isMapFilledWithWalls(int x, int y, t_game *game)
+{
+	if (x < 0 || x >= game->size.y || y < 0 || y >= game->size.x)
+		return ; // Out of bounds
+	if (game->map[y][x] == WALL || game->map[y][x] >= 10)
+		return ; // Wall or already visited
+	game->map[y][x] += 10;
+
+	isMapFilledWithWalls(x + 1, y, game);
+	isMapFilledWithWalls(x - 1, y, game);
+	isMapFilledWithWalls(x, y + 1, game);
+	isMapFilledWithWalls(x, y - 1, game);
 }
 
 void	parse_map(char *path, t_game *game)
@@ -81,11 +95,11 @@ void	parse_map(char *path, t_game *game)
 	temp = check_fd(fd, temp);
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
-//	printf("%d\n", game->map[0][24]);
-//	print_map(game);
+	print_map(game);
+	check_min_amount(game);
+	isMapFilledWithWalls(game->playerpos.x, game->playerpos.y,game);
+
 }
-
-
 
 int	init_map_size(char *path, t_game *game)
 {

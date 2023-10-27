@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 15:54:57 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:49:47 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	error(char *message)
 {
 	if (message)
 	{
-		ft_putstr_fd("So_long: Error: ", 2);
+		ft_putstr_fd("Cub3D: Error: ", 2);
 		ft_putendl_fd(message, 2);
 	}
 	exit(1);

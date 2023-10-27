@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/25 17:55:37 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:15:13 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ enum e_elements
 {
 	EMPTY,
 	WALL,
-	ITEMS,
-	EXIT,
+	SPACE,
 	PLAYER_N,
 	PLAYER_E,
 	PLAYER_S,
@@ -46,6 +45,7 @@ typedef struct s_vector
 {
 	int	x;
 	int	y;
+	int pos;
 }	t_vector;
 
 typedef struct s_game
