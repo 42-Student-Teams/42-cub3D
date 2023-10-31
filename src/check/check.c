@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 20:14:09 by leon             ###   ########.fr       */
+/*   Updated: 2023/10/31 15:36:29 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int	check_player(char c)
 		return (PLAYER_E);
 	else if (c == 'W')
 		return (PLAYER_W);
-	return (-1);
+	return (SPACE);
 }
 
 int	check_elements(char c, t_game *game)
 {
 	if (c == '0')
-		return (EMPTY);
+		return (FLOOR);
 	else if ((c == 'N' || c == 'S' || c == 'E' || c == 'W') && ++game->players)
 	{
 		game->playerpos.pos = check_player(c);
@@ -59,8 +59,6 @@ int	check_elements(char c, t_game *game)
 		return (WALL);
 	if (c == ' ')
 		return (SPACE);
-	else if (c == '\n')
-		return (0);
 	error("Invalid characters in map");
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 20:18:11 by leon             ###   ########.fr       */
+/*   Updated: 2023/10/31 15:48:55 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,16 @@ static void	fill_start_line(char *new)
 
 	i = -1;
 	while (new[++i] == ' ')
-		new[i] = '0';
+		new[i] = ' ';
 }
 
 static void fill_end_line(t_game *game, char *new, int i)
 {
 	while (i < game->size.x)
 	{
-		new[i - 1] = new[i - 2];
+		new[i] = ' ';
 		i++;
 	}
-	new[i - 1] = new[i - 2];
 }
 
 
@@ -60,11 +59,11 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 	new = NULL;
 	i = 0;
-	new = ft_calloc(game->size.x + 1, sizeof(char));
+	new = ft_calloc(game->size.x, sizeof(char));
 	if (!*temp)
 		error("Malloc line failed");
 	len = (int)ft_strlen(*temp);
-	ft_strlcpy(new, *temp, len + 2);
+	ft_strlcpy(new, *temp, len +1);
 	i = len;
 	fill_start_line(new);
 	fill_end_line(game, new, i);
@@ -99,19 +98,19 @@ void	generate_map(t_game *game, int fd, char *temp)
 		new_line = fill_line(temp, game);
 		while (++x < game->size.x)
 		{
-			game->map[y][x] = check_elements(new_line[x], game);
+			if (new_line[x] != '\n')
+				game->map[y][x] = check_elements(new_line[x], game);
 			if (is_player(game->map[y][x]))
 			{
 				game->playerpos.x = x;
 				game->playerpos.y = y;
 			}
 		}
+		game->map[y][x - 1] = SPACE;
 		free(new_line);
 		y ++;
 		temp = ft_get_next_line(fd);
 	}
-	if (temp)
-		free(temp);
 	close(fd);
 }
 

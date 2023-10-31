@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 16:22:10 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:17:41 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,35 @@ static char	*skip_to_map(int fd, char *tmp)
 	return (NULL);
 }
 
-static void isMapFilledWithWalls(int x, int y, t_game *game)
+static int	isMapFilledWithWalls(t_game *game)
 {
-	if (x < 0 || x >= game->size.y || y < 0 || y >= game->size.x)
-		return ; // Out of bounds
-	if (game->map[y][x] == WALL || game->map[y][x] >= 10)
-		return ; // Wall or already visited
-	game->map[y][x] += 10;
+	int	x;
+	int	y;
 
-	isMapFilledWithWalls(x + 1, y, game);
-	isMapFilledWithWalls(x - 1, y, game);
-	isMapFilledWithWalls(x, y + 1, game);
-	isMapFilledWithWalls(x, y - 1, game);
+	y = -1;
+	while (++y < game->size.y)
+	{
+		x = -1;
+		while (++x < game->size.x)
+		{
+			if (game->map[y][x] == FLOOR)
+			{
+				if (y == 0 || y == game->size.x - 1
+					|| x == 0
+					|| x == game->size.y - 1)
+					return (-1);
+				if (game->map[y - 1][x] == SPACE
+					|| game->map[y + 1][x] == SPACE
+					|| game->map[y][x - 1] == SPACE
+					|| game->map[y][x + 1] == SPACE)
+				{
+//					printf("game->map[y][x] '%c', x : %i  y : %i\n", game->map[y][x], y, x);
+					return (-1);
+				}
+			}
+		}
+	}
+	return (0);
 }
 
 void	parse_map(char *path, t_game *game)
@@ -95,9 +112,10 @@ void	parse_map(char *path, t_game *game)
 	temp = check_fd(fd, temp);
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
-	print_map(game);
 	check_min_amount(game);
-	isMapFilledWithWalls(game->playerpos.x, game->playerpos.y,game);
+	print_map(game);
+	if (isMapFilledWithWalls(game))
+		error("Map is not surrounded by walls");
 
 }
 

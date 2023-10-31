@@ -15,7 +15,7 @@
 
 enum e_elements
 {
-	EMPTY,
+	FLOOR,
 	WALL,
 	SPACE,
 	PLAYER_N,
