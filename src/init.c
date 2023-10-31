@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 19:00:36 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/10/27 20:18:11 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,20 @@ static char	*line_fill_wall(t_game *game, char **temp)
 	i = len;
 	fill_start_line(new);
 	fill_end_line(game, new, i);
-	// Fills end of line with the character before the last one
-
 	free(*temp);
 	return (new);
+}
+
+static char	*fill_line(char *temp, t_game *game)
+{
+	char *new_line;
+
+	new_line = NULL;
+	if ((int)ft_strlen(temp) < game->size.x)
+		new_line = line_fill_wall(game, &temp);
+	else
+		new_line = temp;
+	return (new_line);
 }
 
 void	generate_map(t_game *game, int fd, char *temp)
@@ -86,13 +96,9 @@ void	generate_map(t_game *game, int fd, char *temp)
 	{
 		x = -1;
 		game->map[y] = ft_allok(game->size.x, sizeof(int), 1);
-		if ((int)ft_strlen(temp) < game->size.x)
-			new_line = line_fill_wall(game, &temp);
-		else
-			new_line = temp;
+		new_line = fill_line(temp, game);
 		while (++x < game->size.x)
 		{
-//			printf("%c", new_line[x]);
 			game->map[y][x] = check_elements(new_line[x], game);
 			if (is_player(game->map[y][x]))
 			{
@@ -104,6 +110,8 @@ void	generate_map(t_game *game, int fd, char *temp)
 		y ++;
 		temp = ft_get_next_line(fd);
 	}
+	if (temp)
+		free(temp);
 	close(fd);
 }
 
