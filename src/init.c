@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/31 15:48:55 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:48:14 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,16 @@
 
 #include "cube.h"
 
-static int	is_player(char c)
+static void	is_player(t_game *game, int y, int x)
 {
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
-	return (0);
+	if (game->map[y][x] == 'N'
+		|| game->map[y][x] == 'S'
+		|| game->map[y][x] == 'E'
+		|| game->map[y][x] == 'W')
+	{
+		game->playerpos.x = y;
+		game->playerpos.y = x;
+	}
 }
 
 
@@ -63,7 +68,8 @@ static char	*line_fill_wall(t_game *game, char **temp)
 	if (!*temp)
 		error("Malloc line failed");
 	len = (int)ft_strlen(*temp);
-	ft_strlcpy(new, *temp, len +1);
+	ft_strlcpy(new, *temp, len + 1);
+	new[len - 1] = ' ';
 	i = len;
 	fill_start_line(new);
 	fill_end_line(game, new, i);
@@ -82,31 +88,39 @@ static char	*fill_line(char *temp, t_game *game)
 		new_line = temp;
 	return (new_line);
 }
+//
+//static void	in_charset(char c, int flag)
+//{
+//	if (c == '1' || c == '0' || c == '2' || c == ' ')
+//		flag = 0;
+//	else
+//		flag = 1;
+//}
 
 void	generate_map(t_game *game, int fd, char *temp)
 {
 	int		x;
 	int		y;
-	char 	*new_line;
+	char	*new_line;
 
 	y = 0;
 	new_line = NULL;
 	while (temp)
 	{
+		if (temp[0] == '\n')
+			error("Empty line in map");
 		x = -1;
-		game->map[y] = ft_allok(game->size.x, sizeof(int), 1);
+		game->map[y] = ft_calloc(game->size.x, sizeof(int));
+		if (!game->map[y])
+			error("Malloc map failed");
 		new_line = fill_line(temp, game);
-		while (++x < game->size.x)
+		while (++x < game->size.x -1)
 		{
 			if (new_line[x] != '\n')
 				game->map[y][x] = check_elements(new_line[x], game);
-			if (is_player(game->map[y][x]))
-			{
-				game->playerpos.x = x;
-				game->playerpos.y = y;
-			}
+			is_player(game, y, x);
+
 		}
-		game->map[y][x - 1] = SPACE;
 		free(new_line);
 		y ++;
 		temp = ft_get_next_line(fd);

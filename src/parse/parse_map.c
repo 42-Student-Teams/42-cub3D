@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/31 17:17:41 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:29:12 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	print_map(t_game *game)
 	while (y < game->size.y)
 	{
 		x = 0;
-		while (x < game->size.x)
+		while (x < game->size.x - 1)
 		{
 			printf("%i", game->map[y][x]);
 			x++;
@@ -76,22 +76,19 @@ static int	isMapFilledWithWalls(t_game *game)
 	while (++y < game->size.y)
 	{
 		x = -1;
-		while (++x < game->size.x)
+		while (++x < game->size.x - 1)
 		{
 			if (game->map[y][x] == FLOOR)
 			{
-				if (y == 0 || y == game->size.x - 1
+				if (y == 0 || y == game->size.y
 					|| x == 0
-					|| x == game->size.y - 1)
+					|| x == game->size.x)
 					return (-1);
-				if (game->map[y - 1][x] == SPACE
-					|| game->map[y + 1][x] == SPACE
-					|| game->map[y][x - 1] == SPACE
-					|| game->map[y][x + 1] == SPACE)
-				{
-//					printf("game->map[y][x] '%c', x : %i  y : %i\n", game->map[y][x], y, x);
+				if (game->map[y][x - 1] == SPACE
+					|| game->map[y][x + 1] == SPACE
+					|| game->map[y - 1][x] == SPACE
+					|| game->map[y + 1][x] == SPACE)
 					return (-1);
-				}
 			}
 		}
 	}
@@ -100,23 +97,22 @@ static int	isMapFilledWithWalls(t_game *game)
 
 void	parse_map(char *path, t_game *game)
 {
-	int fd;
-	char *temp;
+	int		fd;
+	char 	*temp;
 
 	fd = 0;
 	temp = NULL;
 	check_extension(path);
 	game->size.y = init_map_size(path, game);
-	game->map = ft_allok(game->size.y, sizeof(int *), 1);
+	game->map = ft_allok(game->size.y + 2, sizeof(int *), 1);
 	fd = check_open_fd(path, fd);
 	temp = check_fd(fd, temp);
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
 	check_min_amount(game);
-	print_map(game);
 	if (isMapFilledWithWalls(game))
 		error("Map is not surrounded by walls");
-
+	print_map(game);
 }
 
 int	init_map_size(char *path, t_game *game)
