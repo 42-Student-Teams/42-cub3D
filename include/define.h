@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 17:15:13 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:47:00 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,23 @@ typedef struct s_vector
 	int pos;
 }	t_vector;
 
+typedef struct s_texture
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+}	t_texture;
+
 typedef struct s_game
 {
 	t_vector	size;
 	t_vector	playerpos;
 	t_window	window;
 	int			**map;
-	int			item;
-	int			item_count;
-	int			moves;
-	int			exit;
 	int			players;
-//	t_canvas	sprites[5];
+	t_texture	xpm;
+
 }	t_game;
 
 #endif

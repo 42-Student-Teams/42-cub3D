@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/27 12:57:34 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:05:41 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void		arg_error(int ac);
 void		generate_map(t_game *game, int fd, char *temp);
 int			check_elements(char c, t_game *game);
 void		check_min_amount(t_game *game);
+void		parse_texture(char *file, t_game *game);
+int			check_open_fd(char *path, int fd);
+char		*check_fd(int fd, char *tmp);
 void		check_wall(t_game *game);
 void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);

@@ -6,19 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/01 17:48:14 by lsaba-qu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/19 19:31:57 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/04/06 16:16:23 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/01 19:50:36 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +76,6 @@ static char	*fill_line(char *temp, t_game *game)
 		new_line = temp;
 	return (new_line);
 }
-//
-//static void	in_charset(char c, int flag)
-//{
-//	if (c == '1' || c == '0' || c == '2' || c == ' ')
-//		flag = 0;
-//	else
-//		flag = 1;
-//}
 
 void	generate_map(t_game *game, int fd, char *temp)
 {

@@ -34,8 +34,10 @@ SRCS		:= \
 	src/message.c					\
 	src/init.c						\
 	src/check/check.c				\
+	src/check/check_utils.c			\
 	src/movement/hook.c				\
 	src/parse/parse_map.c			\
+	src/parse/parse_texture.c		\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
