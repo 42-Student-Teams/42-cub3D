@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/03 13:47:00 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/03 18:51:02 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ typedef struct s_texture
 	char	*so;
 	char	*we;
 	char	*ea;
+	char	*floor;
+	char	*ceiling;
+	int 	f;
+	int		c;
+	int		cptcolors;
 }	t_texture;
 
 typedef struct s_game
