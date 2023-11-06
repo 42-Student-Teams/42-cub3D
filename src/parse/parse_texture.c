@@ -6,7 +6,7 @@
 /*   By: leon <leon@student.1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/11/03 19:09:58 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/06 20:34:03 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,43 @@ static void	get_texture(char *temp, int fd, t_game *game)
 	close(fd);
 }
 
+static void	count_commas(char **rgb)
+{
+	int	i;
+
+	i = 0;
+	while (rgb[i])
+		i++;
+	if (i != 3)
+		error("Only 3 values are allowed for RGB");
+}
+
+static void	check_color_value(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(*str[i]))
+			error("Invalid color");
+		i++;
+	}
+}
+
+static void	count_chars(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != ' ')
+		i++;
+	printf("i: %d\n", i);
+	if (i > 3)
+		error("Invalid color");
+
+}
+
 static int	get_color_value(char *str)
 {
 	int		i;
@@ -135,6 +172,12 @@ static int	get_color_value(char *str)
 	i = 0;
 	color = 0;
 	rgb = ft_split(str, ',');
+	skip_spaces(&rgb[0]);
+	skip_spaces(&rgb[1]);
+	skip_spaces(&rgb[2]);
+	count_commas(rgb);
+	count_chars(rgb[1]);
+	check_color_value(rgb);
 	while (rgb[i])
 	{
 		color = color * 256 + ft_atoi(rgb[i]);
