@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/01 19:50:36 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/07 17:18:50 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 	new = NULL;
 	i = 0;
-	new = ft_calloc(game->size.x, sizeof(char));
+	new = ft_calloc(game->size.x + 1, sizeof(char));
 	if (!*temp)
 		error("Malloc line failed");
 	len = (int)ft_strlen(*temp);
@@ -70,10 +70,12 @@ static char	*fill_line(char *temp, t_game *game)
 	char *new_line;
 
 	new_line = NULL;
+	printf("temp : \t%s\n", temp);
 	if ((int)ft_strlen(temp) < game->size.x)
 		new_line = line_fill_wall(game, &temp);
 	else
 		new_line = temp;
+	printf("new : \t%s\n", new_line);
 	return (new_line);
 }
 
@@ -94,12 +96,11 @@ void	generate_map(t_game *game, int fd, char *temp)
 		if (!game->map[y])
 			error("Malloc map failed");
 		new_line = fill_line(temp, game);
-		while (++x < game->size.x -1)
+		while (++x < game->size.x-1)
 		{
 			if (new_line[x] != '\n')
 				game->map[y][x] = check_elements(new_line[x], game);
 			is_player(game, y, x);
-
 		}
 		free(new_line);
 		y ++;

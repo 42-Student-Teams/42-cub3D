@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/03 18:51:02 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/07 15:15:40 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ typedef struct s_vector
 	int pos;
 }	t_vector;
 
+typedef struct s_rgb {
+    int	r;
+    int	g;
+    int	b;
+}	t_rgb;
+
 typedef struct s_texture
 {
 	char	*no;
@@ -56,8 +62,8 @@ typedef struct s_texture
 	char	*ea;
 	char	*floor;
 	char	*ceiling;
-	int 	f;
-	int		c;
+	t_rgb	rgbf;
+	t_rgb	rgbc;
 	int		cptcolors;
 }	t_texture;
 

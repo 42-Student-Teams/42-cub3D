@@ -6,7 +6,7 @@
 /*   By: leon <leon@student.1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/11/06 20:34:03 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/07 17:08:53 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,56 +137,70 @@ static void	count_commas(char **rgb)
 		error("Only 3 values are allowed for RGB");
 }
 
-static void	check_color_value(char **str)
+static char	*remove_all_spaces(const char *str)
 {
-	int	i;
+	int			count;
+	const char	*temp;
+	char 		*result;
 
-	i = 0;
-	while (str[i])
+	count = 0;
+	if (str == NULL)
+		return NULL;
+	temp = str;
+	while (*temp)
 	{
-		if (!ft_isdigit(*str[i]))
-			error("Invalid color");
-		i++;
+		if (*temp != ' ')
+			++count;
+		++temp;
 	}
+	result = (char *)malloc(count + 1);
+	if (result == NULL)
+		return NULL;
+	int j = 0;
+	while (*str)
+	{
+		if (*str != ' ')
+			result[j++] = *str;
+		++str;
+	}
+	result[j] = '\0';
+	return (result);
 }
 
-static void	count_chars(char *str)
+static t_rgb	big_trim(char **str)
 {
-	int	i;
+	t_rgb rgb;
 
-	i = 0;
-	while (str[i] && str[i] != ' ')
-		i++;
-	printf("i: %d\n", i);
-	if (i > 3)
-		error("Invalid color");
-
+	rgb.r = ft_atoi(remove_all_spaces(str[0]));
+	rgb.g = ft_atoi(remove_all_spaces(str[1]));
+	rgb.b = ft_atoi(remove_all_spaces(str[2]));
+	return (rgb);
 }
 
-static int	get_color_value(char *str)
+static void	check_color_rgb(t_rgb new_rgb)
 {
-	int		i;
-	int		color;
-	char	**rgb;
+	if (new_rgb.r < 0 || new_rgb.r > 255)
+		error("Invalid color value");
+	if (new_rgb.g < 0 || new_rgb.g > 255)
+		error("Invalid color value");
+	if (new_rgb.b < 0 || new_rgb.b > 255)
+		error("Invalid color value");
+}
 
-	i = 0;
-	color = 0;
-	rgb = ft_split(str, ',');
-	skip_spaces(&rgb[0]);
-	skip_spaces(&rgb[1]);
-	skip_spaces(&rgb[2]);
-	count_commas(rgb);
-	count_chars(rgb[1]);
-	check_color_value(rgb);
-	while (rgb[i])
-	{
-		color = color * 256 + ft_atoi(rgb[i]);
-		i++;
-	}
-	if (color < 0)
-		error("Invalid color");
-	printf("color: %d\n", color);
-	return (color);
+static t_rgb get_color_value(char *str)
+{
+	t_rgb	new_rgb;
+	char	**temp;
+
+	new_rgb = (t_rgb){0, 0, 0};
+	temp = ft_split(str, ',');
+	skip_spaces(&temp[0]);
+	skip_spaces(&temp[1]);
+	skip_spaces(&temp[2]);
+	count_commas(temp);
+	new_rgb = big_trim(temp);
+	check_color_rgb(new_rgb);
+	return (new_rgb);
 }
 
 static void	parse_files(t_game *game)
@@ -197,17 +211,9 @@ static void	parse_files(t_game *game)
 	skip_spaces(&game->xpm.ea);
 	skip_spaces(&game->xpm.floor);
 	skip_spaces(&game->xpm.ceiling);
-	game->xpm.f = get_color_value(game->xpm.floor);
-	game->xpm.c = get_color_value(game->xpm.ceiling);
+	game->xpm.rgbc = get_color_value(game->xpm.floor);
+	game->xpm.rgbf = get_color_value(game->xpm.ceiling);
 }
-
-//void	check_files(t_game *game)
-//{
-//	int	fd;
-//
-//	fd = 0;
-//	fd = check_open_fd(game->xpm.no, fd);
-//}
 
 void parse_texture(char *file, t_game *game)
 {
