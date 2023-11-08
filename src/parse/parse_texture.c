@@ -6,7 +6,7 @@
 /*   By: leon <leon@student.1337.ma>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/11/07 17:08:53 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/08 07:51:25 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,40 @@ static void	parse_files(t_game *game)
 	game->xpm.rgbf = get_color_value(game->xpm.ceiling);
 }
 
+static void	check_file_exist(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error("Invalid texture");
+	close(fd);
+}
+
+static void	remove_newline(char *str)
+{
+	size_t	len;
+
+	if (str == NULL)
+		return ;
+	len = ft_strlen(str);
+	if (len > 0 && str[len - 1] == '\n') {
+		str[len - 1] = '\0'; // Replace newline with null terminator
+	}
+}
+
+static void	check_files(t_game *game)
+{
+	remove_newline(game->xpm.no);
+	remove_newline(game->xpm.so);
+	remove_newline(game->xpm.we);
+	remove_newline(game->xpm.ea);
+	check_file_exist(game->xpm.no);
+	check_file_exist(game->xpm.so);
+	check_file_exist(game->xpm.we);
+	check_file_exist(game->xpm.ea);
+}
+
 void parse_texture(char *file, t_game *game)
 {
 	int		fd;
@@ -226,5 +260,5 @@ void parse_texture(char *file, t_game *game)
 	temp = check_fd(fd, file);
 	get_texture(temp, fd, game);
 	parse_files(game);
-//	check_files(game);
+	check_files(game);
 }
