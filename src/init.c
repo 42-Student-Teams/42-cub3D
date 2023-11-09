@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/09 08:53:43 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 10:29:27 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ void	generate_map(t_game *game, int fd, char *temp)
 	new_line = NULL;
 	while (temp)
 	{
-//		if (temp[0] == '\n')
-//			error("Empty line in map");
 		x = -1;
 		game->map[y] = ft_calloc(game->size.x, sizeof(int));
 		if (!game->map[y])

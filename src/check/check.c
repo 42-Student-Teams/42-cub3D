@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/07 17:03:42 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 10:27:16 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	check_elements(char c, t_game *game)
 		return (FLOOR);
 	else if ((c == 'N' || c == 'S' || c == 'E' || c == 'W') && ++game->players)
 	{
-		printf("player found\n");
 		game->playerpos.pos = check_player(c);
 		return (check_player(c));
 	}

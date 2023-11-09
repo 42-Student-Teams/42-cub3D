@@ -35,7 +35,6 @@ SRCS		:= \
 	src/init.c						\
 	src/check/check.c				\
 	src/check/check_utils.c			\
-	src/movement/hook.c				\
 	src/parse/parse_map.c			\
 	src/parse/parse_texture.c		\
 

@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/09 08:55:25 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 10:33:25 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,6 @@ static int	max_line_len(char *tmp, int max)
 	if ((int)ft_strlen(tmp) > max)
 		max = (int)ft_strlen(tmp);
 	return (max);
-}
-
-static void	print_map(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < game->size.y)
-	{
-		x = 0;
-		while (x < game->size.x - 1)
-		{
-			printf("%i", game->map[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
 }
 
 static char	*skip_to_map(int fd, char *tmp)
@@ -95,7 +76,6 @@ void	parse_map(char *path, t_game *game)
 	check_min_amount(game);
 	if (isMapFilledWithWalls(game))
 		error("Map is not surrounded by walls");
-	print_map(game);
 }
 
 int	init_map_size(char *path, t_game *game)

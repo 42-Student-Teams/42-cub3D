@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/01 20:05:41 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 10:38:25 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,11 @@ void		check_min_amount(t_game *game);
 void		parse_texture(char *file, t_game *game);
 int			check_open_fd(char *path, int fd);
 char		*check_fd(int fd, char *tmp);
+void		print_debug(t_game *game);
 void		check_wall(t_game *game);
 void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
-t_canvas	init_image(void *mlx, char *filepath);
-int			draw_map(t_game *game);
-int			hook_exit(t_game *game);
-int			key_hook(int key, t_game *game);
-int			hook_move(t_vector new_pos, t_game *game);
-void		end_program(t_game *game);
 int			init_game(t_game *game);
 
 #endif
