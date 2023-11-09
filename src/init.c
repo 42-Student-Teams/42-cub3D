@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/07 17:18:50 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 08:53:43 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,17 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 static char	*fill_line(char *temp, t_game *game)
 {
-	char *new_line;
+	char	*new_line;
+	int 	len;
 
 	new_line = NULL;
-	printf("temp : \t%s\n", temp);
+	len = (int)ft_strlen(temp);
+	if (temp[len-1] != '\n')
+		temp[len] = '\n';
 	if ((int)ft_strlen(temp) < game->size.x)
 		new_line = line_fill_wall(game, &temp);
 	else
 		new_line = temp;
-	printf("new : \t%s\n", new_line);
 	return (new_line);
 }
 
@@ -89,14 +91,14 @@ void	generate_map(t_game *game, int fd, char *temp)
 	new_line = NULL;
 	while (temp)
 	{
-		if (temp[0] == '\n')
-			error("Empty line in map");
+//		if (temp[0] == '\n')
+//			error("Empty line in map");
 		x = -1;
 		game->map[y] = ft_calloc(game->size.x, sizeof(int));
 		if (!game->map[y])
 			error("Malloc map failed");
 		new_line = fill_line(temp, game);
-		while (++x < game->size.x-1)
+		while (++x < game->size.x - 1)
 		{
 			if (new_line[x] != '\n')
 				game->map[y][x] = check_elements(new_line[x], game);

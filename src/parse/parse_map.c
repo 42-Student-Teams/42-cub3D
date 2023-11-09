@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/07 17:00:46 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/09 08:55:25 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	isMapFilledWithWalls(t_game *game)
 	int	y;
 
 	y = -1;
-	while (++y < game->size.y)
+	while (++y < game->size.y - 1)
 	{
 		x = -1;
 		while (++x < game->size.x - 1)
