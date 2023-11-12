@@ -38,6 +38,7 @@ SRCS		:= \
 	src/movement/hook.c				\
 	src/parse/parse_map.c			\
 	src/parse/parse_texture.c		\
+	src/game/init_game.c			\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)

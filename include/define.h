@@ -6,12 +6,26 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/07 15:15:40 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:48:41 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
+
+//---- CONSTANTS ----
+# define WIDTH 1920
+# define HEIGHT 1080
+
+//EVENTS ENUM
+enum e_events {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
 
 enum e_elements
 {
@@ -45,13 +59,13 @@ typedef struct s_vector
 {
 	int	x;
 	int	y;
-	int pos;
+	int	pos;
 }	t_vector;
 
 typedef struct s_rgb {
-    int	r;
-    int	g;
-    int	b;
+	int	r;
+	int	g;
+	int	b;
 }	t_rgb;
 
 typedef struct s_texture
@@ -75,7 +89,6 @@ typedef struct s_game
 	int			**map;
 	int			players;
 	t_texture	xpm;
-
 }	t_game;
 
 #endif

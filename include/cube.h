@@ -61,6 +61,15 @@ int			hook_exit(t_game *game);
 int			key_hook(int key, t_game *game);
 int			hook_move(t_vector new_pos, t_game *game);
 void		end_program(t_game *game);
+
+//--- GAME ---
+
+// INIT
 int			init_game(t_game *game);
+
+// HOOK
+int			key_event(int keycode, t_game *game);
+int			close_window(t_game *game);
+
 
 #endif
