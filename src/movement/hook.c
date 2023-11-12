@@ -6,11 +6,24 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/24 19:31:46 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:39:41 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+int	key_event(int keycode, t_game *game)
+{
+	if (keycode == KEYCODE_ESC)
+		close_window(game);
+	return (0);
+}
+
+int	close_window(t_game *game)
+{
+	mlx_destroy_image(game->window.mlx, game->window.win);
+	exit(0);
+}
 
 //int	hook_exit(t_game *game)
 //{

@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/07 17:10:22 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:48:58 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	main(int ac, char **av)
 		arg_error(ac);
 	parse_map(av[1], &game);
 	parse_texture(av[1], &game);
-//	init_game(&game);
+	init_game(&game);
 	return (0);
 }

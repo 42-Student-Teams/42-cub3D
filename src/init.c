@@ -79,7 +79,7 @@ static char	*fill_line(char *temp, t_game *game)
 	return (new_line);
 }
 
-void	generate_map(t_game *game, int fd, char *temp)
+void generate_map(t_game *game, int fd, char *temp)
 {
 	int		x;
 	int		y;
@@ -96,7 +96,7 @@ void	generate_map(t_game *game, int fd, char *temp)
 		if (!game->map[y])
 			error("Malloc map failed");
 		new_line = fill_line(temp, game);
-		while (++x < game->size.x-1)
+		while (++x < game->size.x - 1)
 		{
 			if (new_line[x] != '\n')
 				game->map[y][x] = check_elements(new_line[x], game);
