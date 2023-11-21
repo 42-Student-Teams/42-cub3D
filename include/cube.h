@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/01 20:05:41 by leon             ###   ########.fr       */
+/*   Updated: 2023/11/21 17:28:24 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
 t_canvas	init_image(void *mlx, char *filepath);
-int			draw_map(t_game *game);
 int			hook_exit(t_game *game);
 int			key_hook(int key, t_game *game);
 int			hook_move(t_vector new_pos, t_game *game);
@@ -66,10 +65,18 @@ void		end_program(t_game *game);
 
 // INIT
 int			init_game(t_game *game);
+void 		init_player(t_player *player, t_game *game);
 
 // HOOK
 int			key_event(int keycode, t_game *game);
 int			close_window(t_game *game);
+
+// DRAW
+void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
+void		draw_map(t_canvas *img, t_game *game, t_player player);
+void		evaluate_ray(t_player player, t_ray *ray);
+void		dda_algorithme(t_game *game, t_ray *ray, int *side);
+
 
 
 #endif

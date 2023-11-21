@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/10 16:48:41 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:23:56 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define DEFINE_H
 
 //---- CONSTANTS ----
-# define WIDTH 1920
-# define HEIGHT 1080
+# define SCREEN_W 1920
+# define SCREEN_H 1080
+# define COLOR_X 0x00FF0000
+# define COLOR_Y 0x0000FF00
+
+
 
 //EVENTS ENUM
 enum e_events {
@@ -45,8 +49,6 @@ typedef struct s_canvas
 	int		pixel_bits;
 	int		line_length;
 	int		endian;
-	int		x;
-	int		y;
 }	t_canvas;
 
 typedef struct s_window
@@ -61,6 +63,12 @@ typedef struct s_vector
 	int	y;
 	int	pos;
 }	t_vector;
+
+typedef struct s_vector_d
+{
+	double	x;
+	double	y;
+}	t_vector_d;
 
 typedef struct s_rgb {
 	int	r;
@@ -90,5 +98,35 @@ typedef struct s_game
 	int			players;
 	t_texture	xpm;
 }	t_game;
+
+/* player position
+ * player direction (la direction dans laquelle il regarde)
+ * player plane == camera (ce qu'il voit) 
+ * oldtime et time pour le compteur de fps et pour les mouvements */
+typedef struct s_player
+{
+	t_vector_d	pos;
+	t_vector_d	dir;
+	t_vector_d	plane;
+	double		time;
+	double		old_time;
+}	t_player;
+
+typedef	struct s_ray 
+{
+	t_vector_d	dir;
+	t_vector_d	side_dist;
+	t_vector_d	delta_dist;
+	t_vector	square;
+	t_vector	step;
+}	t_ray;
+
+typedef struct s_cam
+{
+	int			start;
+	int			end;
+	double		camera_x;
+	double		wall_dist;
+}	t_cam;
 
 #endif

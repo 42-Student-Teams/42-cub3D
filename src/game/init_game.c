@@ -6,22 +6,168 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/11/10 16:48:47 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:43:19 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
+void init_player(t_player *player, t_game *game)
+{
+	(void)game;
+	player->pos.x = 6; //(double)game->playerpos.x;	
+	player->pos.y = 2; //(double)game->playerpos.y;	
+	player->dir.x = -1;
+	player->dir.y = 0;
+	player->plane.x = 0;
+	player->plane.y = 0.66; // for the player FOV (field of view)
+	player->time = 0;
+	player->old_time = 0;
+}
+
+void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->pixel_bits / 8));
+	*(unsigned int*)dst = color;
+}
+
+void	evaluate_ray(t_player player, t_ray *ray)
+{
+	if (ray->dir.x < 0)
+	{
+		ray->step.x = -1;
+		ray->side_dist.x = (player.pos.x - ray->square.x) * ray->delta_dist.x;
+	}
+	else
+	{
+		ray->step.x = 1;
+		ray->side_dist.x = (player.pos.x + 1.0 - ray->square.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
+	}
+	if (ray->dir.y < 0)
+	{
+		ray->step.y = -1;
+		ray->side_dist.y = (player.pos.y - ray->square.y) * ray->delta_dist.y;
+	}
+	else
+	{
+		ray->step.y = 1;
+		ray->side_dist.y = (player.pos.y + 1.0 - ray->square.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
+	}
+}
+
+void	dda_algorithme(t_game *game, t_ray *ray, int *side)
+{
+	int	hit;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (ray->side_dist.x < ray->side_dist.y)
+		{
+			ray->side_dist.x += ray->delta_dist.x;
+			ray->square.x += ray->step.x;
+			*side = 0;
+		}
+		else
+		{
+			ray->side_dist.y += ray->delta_dist.y;
+			ray->square.y += ray->step.y;
+			*side = 1;
+		}
+		if (game->map[ray->square.y][ray->square.x] > 0)
+			hit = 1;
+	}
+}
+
+int	find_wall_dist(t_ray ray, int side)
+{
+	if (side == 0)
+		return ray.side_dist.x - ray.delta_dist.x;
+	return ray.side_dist.y - ray.delta_dist.y;
+}
+
+void	calculate_wall(t_cam *cam)
+{
+	int	line_height;
+
+	line_height = (int)(SCREEN_H / cam->wall_dist);
+	cam->start = (-1 * line_height / 2) + (SCREEN_H / 2);
+	if (cam->start < 0)
+		cam->start = 0;
+	cam->end = (line_height / 2) + (SCREEN_H / 2);
+	if (cam->end >= SCREEN_H)
+		cam->end = SCREEN_H - 1;
+}
+
+void	draw_line(t_canvas *img, t_cam	*cam, int x, int color)
+{
+	int	start;
+	int	end;
+
+	start = cam->start;
+	end = cam->end;
+	while (start <= end)
+	{
+		my_mlx_pixel_put(img, x, start, color);
+		start++;
+	}
+}
+
+void	draw_map(t_canvas *img, t_game *game, t_player player)
+{
+	int			x;
+	t_ray		ray;
+	t_cam		cam;
+	int			side;
+	int			color;
+
+	x = -1;
+	while (++x < SCREEN_W)
+	{
+		cam.camera_x = 2 * x / (double)SCREEN_W - 1; // x coordinate on the camera plane, so we have -1 on the left of the screen , 0 in the middle and 1 on the right.
+		// ray vector calculation
+		ray.dir.x = player.dir.x + player.plane.x * cam.camera_x;
+		ray.dir.y = player.dir.y + player.plane.y * cam.camera_x;
+		
+		// represent the current square of the map the ray is in
+		ray.square.x = (int)player.pos.x;
+		ray.square.y = (int)player.pos.y;
+		
+		// length of ray from x-side or y-side to next one
+		ray.delta_dist.x =  fabs(1 / ray.dir.x);
+		ray.delta_dist.y =  fabs(1 / ray.dir.y);
+		
+		evaluate_ray(player, &ray); // sert à savoir dans quelle direction le ray va 
+		dda_algorithme(game, &ray, &side); // find where a ray hit a wall
+		cam.wall_dist = find_wall_dist(ray, side);
+		color = (side == 0) ? (COLOR_X / 1.5) : COLOR_X;
+		calculate_wall(&cam);
+		draw_line(img, &cam, x, color);
+		printf("X : %d\n", x);
+		printf("start : %d\n", cam.start);
+		printf("end : %d\n", cam.end);
+	}
+}
+
+
 int	init_game(t_game *game)
 {
 	t_canvas	image;
+	t_player	player;
 
+	init_player(&player, game);
+	printf("posX = %d, posY = %d\n", game->playerpos.x, game->playerpos.y);
+	printf("posX = %f, posY = %f\n", player.pos.x, player.pos.y);
 	game->window.mlx = mlx_init();
-	game->window.win = mlx_new_window(game->window.mlx, WIDTH,
-			HEIGHT, "Cube3D");
-	image.img = mlx_new_image(game->window.mlx, WIDTH, HEIGHT);
+	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
+			SCREEN_H, "Cube3D");
+	image.img = mlx_new_image(game->window.mlx, SCREEN_W, SCREEN_H);
 	image.addr = mlx_get_data_addr(image.img, &image.pixel_bits,
 			&image.line_length, &image.endian);
+	draw_map(&image, game, player);
+	mlx_put_image_to_window(game->window.mlx, game->window.win, image.img, 0, 0);
 	mlx_key_hook(game->window.win, key_event, game);
 	mlx_hook(game->window.win, ON_DESTROY, 0, close_window, game);
 	mlx_loop(game->window.mlx);
