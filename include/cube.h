@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/21 17:28:24 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/11/22 18:33:52 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # include <errno.h>
 # include <math.h>
 
-
 int			init_map_size(char *path, t_game *game);
 int			get_nb_cols_map(char *path, t_game *game);
 void		parse_map(char *path, t_game *game);
@@ -68,7 +67,7 @@ int			init_game(t_game *game);
 void 		init_player(t_player *player, t_game *game);
 
 // HOOK
-int			key_event(int keycode, t_game *game);
+int			key_event(int keycode, t_player *player);
 int			close_window(t_game *game);
 
 // DRAW

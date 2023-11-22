@@ -6,23 +6,49 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/11/21 18:43:19 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/11/22 19:41:42 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
+int worldMap[mapWidth][mapHeight]=
+{
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
+
 void init_player(t_player *player, t_game *game)
 {
-	(void)game;
-	player->pos.x = 6; //(double)game->playerpos.x;	
-	player->pos.y = 2; //(double)game->playerpos.y;	
+	player->game = game;
+	player->pos.x = 22; //(double)game->playerpos.x;	
+	player->pos.y = 12; //(double)game->playerpos.y;	
 	player->dir.x = -1;
 	player->dir.y = 0;
 	player->plane.x = 0;
 	player->plane.y = 0.66; // for the player FOV (field of view)
-	player->time = 0;
-	player->old_time = 0;
 }
 
 void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
@@ -62,6 +88,7 @@ void	dda_algorithme(t_game *game, t_ray *ray, int *side)
 	int	hit;
 
 	hit = 0;
+	(void)game;
 	while (hit == 0)
 	{
 		if (ray->side_dist.x < ray->side_dist.y)
@@ -76,7 +103,8 @@ void	dda_algorithme(t_game *game, t_ray *ray, int *side)
 			ray->square.y += ray->step.y;
 			*side = 1;
 		}
-		if (game->map[ray->square.y][ray->square.x] > 0)
+		// if (game->map[ray->square.y][ray->square.x] > 0)
+		if (worldMap[ray->square.x][ray->square.y])
 			hit = 1;
 	}
 }
@@ -142,34 +170,33 @@ void	draw_map(t_canvas *img, t_game *game, t_player player)
 		evaluate_ray(player, &ray); // sert à savoir dans quelle direction le ray va 
 		dda_algorithme(game, &ray, &side); // find where a ray hit a wall
 		cam.wall_dist = find_wall_dist(ray, side);
-		color = (side == 0) ? (COLOR_X / 1.5) : COLOR_X;
+		color = (side == 0) ? (RED / 1.5) : RED;
 		calculate_wall(&cam);
 		draw_line(img, &cam, x, color);
-		printf("X : %d\n", x);
-		printf("start : %d\n", cam.start);
-		printf("end : %d\n", cam.end);
 	}
+	mlx_put_image_to_window(game->window.mlx, game->window.win, game->image.img, 0, 0);
+	mlx_string_put(game->window.mlx, game->window.win, 20, 20, WHITE, "T'es trop naze");
 }
 
 
 int	init_game(t_game *game)
 {
-	t_canvas	image;
 	t_player	player;
 
 	init_player(&player, game);
+
 	printf("posX = %d, posY = %d\n", game->playerpos.x, game->playerpos.y);
 	printf("posX = %f, posY = %f\n", player.pos.x, player.pos.y);
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
-	image.img = mlx_new_image(game->window.mlx, SCREEN_W, SCREEN_H);
-	image.addr = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_length, &image.endian);
-	draw_map(&image, game, player);
-	mlx_put_image_to_window(game->window.mlx, game->window.win, image.img, 0, 0);
-	mlx_key_hook(game->window.win, key_event, game);
+	game->image.img = mlx_new_image(game->window.mlx, SCREEN_W, SCREEN_H);
+	game->image.addr = mlx_get_data_addr(game->image.img, &game->image.pixel_bits,
+			&game->image.line_length, &game->image.endian);
+	draw_map(&game->image, game, player);
+	mlx_key_hook(game->window.win, key_event, &player);
 	mlx_hook(game->window.win, ON_DESTROY, 0, close_window, game);
+	mlx_hook(game->window.win, ON_KEYDOWN, 0, key_event, &player);
 	mlx_loop(game->window.mlx);
 	exit (0);
 }

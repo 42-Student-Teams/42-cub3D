@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/21 18:23:56 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/11/22 18:47:59 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 //---- CONSTANTS ----
 # define SCREEN_W 1920
 # define SCREEN_H 1080
-# define COLOR_X 0x00FF0000
+# define RED 0x00FF0000
+# define WHITE 0x00FFFFFF
 # define COLOR_Y 0x0000FF00
 
-
-
+# define mapWidth 24
+# define mapHeight 24
 //EVENTS ENUM
 enum e_events {
 	ON_KEYDOWN = 2,
@@ -94,6 +95,7 @@ typedef struct s_game
 	t_vector	size;
 	t_vector	playerpos;
 	t_window	window;
+	t_canvas	image;
 	int			**map;
 	int			players;
 	t_texture	xpm;
@@ -108,8 +110,7 @@ typedef struct s_player
 	t_vector_d	pos;
 	t_vector_d	dir;
 	t_vector_d	plane;
-	double		time;
-	double		old_time;
+	t_game		*game;
 }	t_player;
 
 typedef	struct s_ray 
