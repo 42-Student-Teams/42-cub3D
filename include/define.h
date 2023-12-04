@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/22 18:47:59 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:26:08 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ enum e_elements
 typedef struct s_canvas
 {
 	void	*img;
-	char	*addr;
+	int		*addr;
 	int		pixel_bits;
 	int		line_length;
 	int		endian;
+	int		height;
+	int		width;
 }	t_canvas;
 
 typedef struct s_window
@@ -111,6 +113,7 @@ typedef struct s_player
 	t_vector_d	dir;
 	t_vector_d	plane;
 	t_game		*game;
+	t_canvas	*texture;
 }	t_player;
 
 typedef	struct s_ray 
@@ -129,5 +132,14 @@ typedef struct s_cam
 	double		camera_x;
 	double		wall_dist;
 }	t_cam;
+
+typedef struct 
+{
+	void	*img;
+	char	*addr;
+	int		pixel_bits;
+	int		line_length;
+	int		endian;
+}	t_tex;
 
 #endif

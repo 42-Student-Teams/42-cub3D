@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/22 18:33:52 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:28:07 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		end_program(t_game *game);
 
 // INIT
 int			init_game(t_game *game);
-void 		init_player(t_player *player, t_game *game);
+void 		init_player(t_player *player, t_game *game, t_canvas *texture);
 
 // HOOK
 int			key_event(int keycode, t_player *player);
@@ -72,7 +72,7 @@ int			close_window(t_game *game);
 
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-void		draw_map(t_canvas *img, t_game *game, t_player player);
+void		draw_map(t_canvas *img, t_game *game, t_player player, t_canvas texture);
 void		evaluate_ray(t_player player, t_ray *ray);
 void		dda_algorithme(t_game *game, t_ray *ray, int *side);
 

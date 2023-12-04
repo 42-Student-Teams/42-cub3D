@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/22 19:22:50 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:27:34 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,51 +42,73 @@ int world[mapWidth][mapHeight]=
 
 void	go_straight(t_player *player)
 {
-	if (!world[(int)(player->pos.x + player->dir.x * 0.2)][(int)player->pos.y])
-		player->pos.x += player->dir.x * 0.2;
-	if (!world[(int)player->pos.x][(int)(player->pos.y + player->dir.y * 0.2)])
-		player->pos.y += player->dir.y * 0.2;
+	double	movspeed;
+
+	movspeed = 0.1;
+	if (!world[(int)(player->pos.x + player->dir.x * movspeed)][(int)player->pos.y])
+		player->pos.x += player->dir.x * movspeed;
+	if (!world[(int)player->pos.x][(int)(player->pos.y + player->dir.y * movspeed)])
+		player->pos.y += player->dir.y * movspeed;
 }
 
-int	key_event(int keycode, t_player *player)
+void	go_back(t_player *player)
+{
+	double	movspeed;
+
+	movspeed = 0.1;
+	if (!world[(int)(player->pos.x - player->dir.x * movspeed)][(int)player->pos.y])
+		player->pos.x -= player->dir.x * movspeed;
+	if (!world[(int)player->pos.x][(int)(player->pos.y - player->dir.y * movspeed)])
+		player->pos.y -= player->dir.y * movspeed;
+}
+
+void	rotate_right(t_player *player)
 {
 	double old_dir_x;
 	double old_plane_x;
+	double	rotspeed;
 	
+	rotspeed = 0.033 * 1.8;
+	old_dir_x = player->dir.x;
+	player->dir.x = player->dir.x * cos(-rotspeed) - player->dir.y * sin(-rotspeed);
+	player->dir.y = old_dir_x * sin(-rotspeed) + player->dir.y * cos(-rotspeed);
+	old_plane_x = player->plane.x;
+	player->plane.x = player->plane.x * cos(-rotspeed) - player->plane.y * sin(-rotspeed);
+	player->plane.y = old_plane_x * sin(-rotspeed) + player->plane.y * cos(-rotspeed);
+}
+
+void	rotate_left(t_player *player)
+{
+	double old_dir_x;
+	double old_plane_x;
+	double	rotspeed;
+
+	rotspeed = 0.033 * 1.8;
+	old_dir_x = player->dir.x;
+	player->dir.x = player->dir.x * cos(rotspeed) - player->dir.y * sin(rotspeed);
+	player->dir.y = old_dir_x * sin(rotspeed) + player->dir.y * cos(rotspeed);
+	old_plane_x = player->plane.x;
+	player->plane.x = player->plane.x * cos(rotspeed) - player->plane.y * sin(rotspeed);
+	player->plane.y = old_plane_x * sin(rotspeed) + player->plane.y * cos(rotspeed);
+}
+
+int	key_event(int keycode, t_player *player)
+{	
+	mlx_destroy_image(player->game->window.mlx, player->game->image.img);
 	player->game->image.img = mlx_new_image(player->game->window.mlx, SCREEN_W, SCREEN_H);
-	player->game->image.addr = mlx_get_data_addr(player->game->image.img, &player->game->image.pixel_bits,
-			&player->game->image.line_length, &player->game->image.endian);
-			
+	player->game->image.addr = (int *)mlx_get_data_addr(player->game->image.img, &player->game->image.pixel_bits,
+			&player->game->image.line_length, &player->game->image.endian);	
 	if (keycode == KEYCODE_ESC)
 		close_window(player->game);
 	if (keycode == KEYCODE_W)
 		go_straight(player);
 	if (keycode == KEYCODE_S)
-	{
-		if (!world[(int)(player->pos.x - player->dir.x * 0.2)][(int)player->pos.y])
-			player->pos.x -= player->dir.x * 0.1;
-		if (!world[(int)player->pos.x][(int)(player->pos.y - player->dir.y * 0.2)])
-			player->pos.y -= player->dir.y * 0.2;
-	}
+		go_back(player);
 	if (keycode == KEYCODE_D)
-	{
-		old_dir_x = player->dir.x;
-		player->dir.x = player->dir.x * cos(-0.1) - player->dir.y * sin(-0.1);
-		player->dir.y = old_dir_x * sin(-0.1) + player->dir.y * cos(-0.1);
-		old_plane_x = player->plane.x;
-		player->plane.x = player->plane.x * cos(-0.1) - player->plane.y * sin(-0.1);
-		player->plane.y = old_plane_x * sin(-0.1) + player->plane.y * cos(-0.1);
-	}
+		rotate_right(player);
 	if (keycode == KEYCODE_A)
-	{
-		old_dir_x = player->dir.x;
-		player->dir.x = player->dir.x * cos(0.1) - player->dir.y * sin(0.1);
-		player->dir.y = old_dir_x * sin(0.1) + player->dir.y * cos(0.1);
-		old_plane_x = player->plane.x;
-		player->plane.x = player->plane.x * cos(0.1) - player->plane.y * sin(0.1);
-		player->plane.y = old_plane_x * sin(0.1) + player->plane.y * cos(0.1);
-	}
-	draw_map(&(player)->game->image, player->game, *player);
+		rotate_left(player);
+	draw_map(&(player)->game->image, player->game, *player, *(player)->texture);
 	return (0);
 }
 
