@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 17:02:11 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 23:41:47 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,13 @@ typedef struct s_player
 	t_canvas	*texture;
 	t_cam		cam;
 	t_ray		ray;
+	double		wall_x;
+	double		step;
+	double		tex_pos;
+	int			tex_x;
+	int			tex_y;
+	int			line_height;
+	int			tex_dir;
 }	t_player;
 
 #endif

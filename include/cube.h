@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 17:42:19 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 23:56:55 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,31 @@ void		end_program(t_game *game);
 
 // INIT
 int			init_game(t_game *game);
-void 		init_player(t_player *player, t_game *game, t_canvas *texture);
+void 		init_player(t_player *player, t_game *game);
 
 // HOOK
 int			key_event(int keycode, t_player *player);
 int			close_window(t_game *game);
 
+// MOVE
+void		go_straight(t_player *player);
+void		go_back(t_player *player);
+void		rotate_right(t_player *player);
+void		rotate_left(t_player *player);
+void		go_left(t_player *player);
+void		go_right(t_player *player);
+
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-void		draw_map(t_game *game, t_player player, t_canvas *texture);
+void		draw_map(t_game *game, t_player *p);
+void		draw_line(t_canvas *img, int start, int end, int x, int color);
+void		draw_walls(int side, t_player *p, t_game *game, int x);
 
 // CALCULS
 void		evaluate_ray(t_player player, t_ray *ray);
 void		dda_algorithme(t_game *game, t_ray *ray, int *side);
 double		find_wall_dist(t_ray ray, int side);
 void		calculate_wall(t_cam *cam);
+void		walls_calculs(t_player *p, int side);
 
 #endif
