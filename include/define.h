@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 23:41:47 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:36:49 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@
 # define RED 0x00FF0000
 # define WHITE 0x00FFFFFF
 # define GREEN 0x228B22
-
-# define mapWidth 8
-# define mapHeight 8
-
 # define DOUBLE_MAX 1.797693e+308
 # define PI 3.1415926535
 //EVENTS ENUM
@@ -108,7 +104,7 @@ typedef struct s_game
 	int			ceiling;
 }	t_game;
 
-typedef	struct s_ray 
+typedef struct s_ray
 {
 	t_vector_d	dir;
 	t_vector_d	side_dist;

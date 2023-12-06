@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:54:52 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:07:08 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:39:50 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ void	walls_calculs(t_player *p, int side)
 		p->tex_x = p->texture[p->tex_dir].width - p->tex_x - 1;
 	p->line_height = (int)((double)SCREEN_H / p->cam.wall_dist);
 	p->step = 1.0 * (double)p->texture[p->tex_dir].height / p->line_height;
-	p->tex_pos = ((double)(p->cam.start - SCREEN_H 
+	p->tex_pos = ((double)(p->cam.start - SCREEN_H
 				/ 2 + p->line_height / 2)) * p->step;
 }
