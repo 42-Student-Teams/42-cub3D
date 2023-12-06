@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 16:35:26 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:42:19 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			close_window(t_game *game);
 
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-void		draw_map(t_game *game, t_player player, t_canvas texture);
+void		draw_map(t_game *game, t_player player, t_canvas *texture);
 
 // CALCULS
 void		evaluate_ray(t_player player, t_ray *ray);

@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 16:53:24 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:42:03 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	key_event(int keycode, t_player *player)
 		rotate_right(player);
 	if (keycode == KEYCODE_LEFT_ARROW)
 		rotate_left(player);
-	draw_map(player->game, *player, *(player)->texture);
+	draw_map(player->game, *player, player->texture);
 	return (0);
 }
 
