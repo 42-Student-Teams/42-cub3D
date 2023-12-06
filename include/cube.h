@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 23:56:55 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:12:32 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void		go_right(t_player *player);
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
 void		draw_map(t_game *game, t_player *p);
-void		draw_line(t_canvas *img, int start, int end, int x, int color);
+void		draw_floor(t_canvas *img, int val, int x, int color);
+void		draw_ceiling(t_canvas *img, int val, int x, int color);
 void		draw_walls(int side, t_player *p, t_game *game, int x);
 
 // CALCULS
