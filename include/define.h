@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/05 23:00:54 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:33:40 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define WHITE 0x00FFFFFF
 # define GREEN 0x228B22
 
-# define mapWidth 24
-# define mapHeight 24
+# define mapWidth 8
+# define mapHeight 8
 
 # define DOUBLE_MAX 1.797693e+308
 # define PI 3.1415926535
