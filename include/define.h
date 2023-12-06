@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 12:33:40 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:02:11 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,20 +104,9 @@ typedef struct s_game
 	int			**map;
 	int			players;
 	t_texture	xpm;
+	int			floor;
+	int			ceiling;
 }	t_game;
-
-/* player position
- * player direction (la direction dans laquelle il regarde)
- * player plane == camera (ce qu'il voit) 
- * oldtime et time pour le compteur de fps et pour les mouvements */
-typedef struct s_player
-{
-	t_vector_d	pos;
-	t_vector_d	dir;
-	t_vector_d	plane;
-	t_game		*game;
-	t_canvas	*texture;
-}	t_player;
 
 typedef	struct s_ray 
 {
@@ -136,13 +125,20 @@ typedef struct s_cam
 	double		wall_dist;
 }	t_cam;
 
-typedef struct 
+/* player position
+ * player direction (la direction dans laquelle il regarde)
+ * player plane == camera (ce qu'il voit) 
+ * oldtime et time pour le compteur de fps et pour les mouvements */
+
+typedef struct s_player
 {
-	void	*img;
-	char	*addr;
-	int		pixel_bits;
-	int		line_length;
-	int		endian;
-}	t_tex;
+	t_vector_d	pos;
+	t_vector_d	dir;
+	t_vector_d	plane;
+	t_game		*game;
+	t_canvas	*texture;
+	t_cam		cam;
+	t_ray		ray;
+}	t_player;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/06 16:46:16 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:38:41 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,84 +48,100 @@ void	my_mlx_texture_put(t_canvas *data, int x, int y, int color)
 	data->addr[y * data->line_length / 4 + x] = color;
 }
 
-void	draw_walls(int side, t_player player, t_cam cam, t_ray ray, t_canvas texture, t_game *game, int x)
+void	draw_walls(int side, t_player player, t_canvas texture, t_game *game, int x)
 {
-	double wall_x;
+	double	wall_x;
+	double	step;
+	double	tex_pos;
+	int		tex_x;
+	int		tex_y;
+	int		line_height;
+	int		color;
+
 	if (side == 0)
-		wall_x = player.pos.y + cam.wall_dist * ray.dir.y;
+		wall_x = player.pos.y + player.cam.wall_dist * player.ray.dir.y;
 	else
-		wall_x = player.pos.x + cam.wall_dist * ray.dir.x;
+		wall_x = player.pos.x + player.cam.wall_dist * player.ray.dir.x;
 	wall_x -= floor(wall_x);
-	int tex_x;
 	tex_x = (int)(wall_x * (double)texture.width);
-	if(side == 0 && ray.dir.x > 0) 
+	if(side == 0 && player.ray.dir.x > 0) 
 		tex_x = texture.width - tex_x - 1;
-	if(side == 1 && ray.dir.y < 0) 
+	if(side == 1 && player.ray.dir.y < 0) 
 		tex_x = texture.width - tex_x - 1;
-	int line_height = (int)((double)SCREEN_H / cam.wall_dist);
-	double step = 1.0 * (double)texture.height / line_height;
-	double tex_pos = ((double)(cam.start - SCREEN_H / 2 + line_height / 2)) * step;
-	while (cam.start <= cam.end)
+	line_height = (int)((double)SCREEN_H / player.cam.wall_dist);
+	step = 1.0 * (double)texture.height / line_height;
+	tex_pos = ((double)(player.cam.start - SCREEN_H / 2 + line_height / 2)) * step;
+	while (player.cam.start <= player.cam.end)
 	{
-		int tex_y = (int)tex_pos & texture.height - 1;
-		int color =  texture.addr[tex_y * texture.line_length / 4 + tex_x];
+		tex_y = (int)tex_pos & texture.height - 1;
+		color =  texture.addr[tex_y * texture.line_length / 4 + tex_x];
 		if (side == 0)
 			color /= 2;
 		tex_pos += step;
-		my_mlx_texture_put(&game->image, x, cam.start, color);
-		cam.start++;
+		my_mlx_texture_put(&game->image, x, player.cam.start, color);
+		player.cam.start++;
 	} 
 }
 
-void	draw_map(t_game *game, t_player player, t_canvas	texture)
+void	draw_map(t_game *game, t_player player, t_canvas texture)
 {
 	int			x;
-	t_ray		ray;
-	t_cam		cam;
 	int			side;
 
 	x = -1;
 	while (++x < SCREEN_W)
 	{
-		cam.camera_x =  2 * x / (double)(SCREEN_W) - 1; // x coordinate on the camera plane, so we have -1 on the left of the screen , 0 in the middle and 1 on the right.
-		// ray vector calculation
-		ray.dir.x = player.dir.x + player.plane.x * cam.camera_x;
-		ray.dir.y = player.dir.y + player.plane.y * cam.camera_x;
-		
-		// represent the current square of the map the ray is in
-		ray.square.x = (int)player.pos.x;
-		ray.square.y = (int)player.pos.y;
-		
-		// length of ray from x-side or y-side to next one
-		ray.delta_dist.x =  fabs(1 / ray.dir.x);
-		ray.delta_dist.y =  fabs(1 / ray.dir.y);
-		
-		evaluate_ray(player, &ray); // sert à savoir dans quelle direction le ray va 
-		dda_algorithme(game, &ray, &side); // find where a ray hit a wall
-		cam.wall_dist = find_wall_dist(ray, side);
-		calculate_wall(&cam);
-		// nettoyer
-		draw_walls(side, player, cam, ray, texture, game, x);
+		player.cam.camera_x =  2 * x / (double)(SCREEN_W) - 1; 
+		player.ray.dir.x = player.dir.x + player.plane.x * player.cam.camera_x;
+		player.ray.dir.y = player.dir.y + player.plane.y * player.cam.camera_x;
+		player.ray.square.x = (int)player.pos.x;
+		player.ray.square.y = (int)player.pos.y;
+		player.ray.delta_dist.x =  fabs(1 / player.ray.dir.x);
+		player.ray.delta_dist.y =  fabs(1 / player.ray.dir.y);
+		evaluate_ray(player, &player.ray);
+		dda_algorithme(game, &player.ray, &side);
+		player.cam.wall_dist = find_wall_dist(player.ray, side);
+		calculate_wall(&player.cam);
+		draw_walls(side, player, texture, game, x);
 		//draw_line(img, &cam, x, color);
 	}
 	mlx_put_image_to_window(game->window.mlx, game->window.win, game->image.img, 0, 0);
 }
 
+t_canvas	*init_texture(t_game *game)
+{
+	t_canvas *texture;
+
+	texture = ft_calloc(5, sizeof(t_canvas));
+	if (!texture)
+		error("malloc error");
+	texture[0].img = mlx_xpm_file_to_image(game->window.win, game->xpm.no, &texture[0].width, &texture[0].height);
+	texture[0].addr = (int *)mlx_get_data_addr(texture[0].img, &texture[0].pixel_bits, &texture[0].line_length, &texture[0].endian);
+	texture[1].img = mlx_xpm_file_to_image(game->window.win, game->xpm.so, &texture[1].width, &texture[1].height);
+	texture[1].addr = (int *)mlx_get_data_addr(texture[1].img, &texture[1].pixel_bits, &texture[1].line_length, &texture[1].endian);
+	texture[2].img = mlx_xpm_file_to_image(game->window.win, game->xpm.we, &texture[2].width, &texture[2].height);
+	texture[2].addr = (int *)mlx_get_data_addr(texture[2].img, &texture[2].pixel_bits, &texture[2].line_length, &texture[0].endian);
+	texture[3].img = mlx_xpm_file_to_image(game->window.win, game->xpm.ea, &texture[3].width, &texture[3].height);
+	texture[3].addr = (int *)mlx_get_data_addr(texture[3].img, &texture[3].pixel_bits, &texture[3].line_length, &texture[3].endian);
+	return texture;
+}
+
 int	init_game(t_game *game)
 {
 	t_player	player;
-	t_canvas	texture;
+	t_canvas	*texture;
 
-	init_player(&player, game, &texture);
+	ft_bzero(&player, sizeof(t_player));
+	ft_bzero(&texture, sizeof(t_texture *));
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
 	game->image.img = mlx_new_image(game->window.mlx, SCREEN_W, SCREEN_H);
 	game->image.addr = (int *)mlx_get_data_addr(game->image.img, &game->image.pixel_bits,
 	 		&game->image.line_length, &game->image.endian);
-	texture.img = mlx_xpm_file_to_image(game->window.win, "maps/textures/red.xpm", &texture.width, &texture.height);
-	texture.addr = (int *)mlx_get_data_addr(texture.img, &texture.pixel_bits, &texture.line_length, &texture.endian);
-	draw_map(game, player, texture);
+	texture = init_texture(game);
+	init_player(&player, game, &texture[0]);
+	draw_map(game, player, texture[0]);
 	mlx_key_hook(game->window.win, key_event, &player);
 	mlx_hook(game->window.win, ON_DESTROY, 0, close_window, game);
 	mlx_hook(game->window.win, ON_KEYDOWN, 0, key_event, &player);
