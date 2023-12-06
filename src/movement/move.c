@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:48:51 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:28:27 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:52:18 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	go_right(t_player *player)
 	double	movspeed;
 
 	movspeed = 0.1;
-	if (player->game->map[(int)(player->pos.x + player->dir.y 
+	if (player->game->map[(int)(player->pos.x + player->dir.y
 			* movspeed * 2)][(int)player->pos.y] == 0)
 		player->pos.x += player->dir.y * movspeed;
 	if (player->game->map[(int)player->pos.x][(int)(player->pos.y

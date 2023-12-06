@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:54:52 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:39:50 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:51:55 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ void	walls_calculs(t_player *p, int side)
 		p->wall_x = p->pos.x + p->cam.wall_dist * p->ray.dir.x;
 	p->wall_x -= floor(p->wall_x);
 	p->tex_x = (int)(p->wall_x * (double)p->texture[p->tex_dir].width);
-	if (side == 0 && p->ray.dir.x > 0) 
+	if (side == 0 && p->ray.dir.x > 0)
 		p->tex_x = p->texture[p->tex_dir].width - p->tex_x - 1;
-	if (side == 1 && p->ray.dir.y < 0) 
+	if (side == 1 && p->ray.dir.y < 0)
 		p->tex_x = p->texture[p->tex_dir].width - p->tex_x - 1;
 	p->line_height = (int)((double)SCREEN_H / p->cam.wall_dist);
 	p->step = 1.0 * (double)p->texture[p->tex_dir].height / p->line_height;

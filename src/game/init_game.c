@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:45:49 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:51:36 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	rgb_to_int(t_rgb rgb)
 	r = rgb.r;
 	g = rgb.g;
 	b = rgb.b;
-	return (((r & 0x0ff) << 16) | ((g & 0x0ff) << 8)| (b & 0x0ff));
+	return (((r & 0x0ff) << 16) | ((g & 0x0ff) << 8) | (b & 0x0ff));
 }
 
 int	init_game(t_game *game)
