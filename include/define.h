@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/04 13:26:08 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/05 23:00:54 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 # define DEFINE_H
 
 //---- CONSTANTS ----
-# define SCREEN_W 1920
-# define SCREEN_H 1080
+# define SCREEN_W 1080
+# define SCREEN_H 720
 # define RED 0x00FF0000
 # define WHITE 0x00FFFFFF
-# define COLOR_Y 0x0000FF00
+# define GREEN 0x228B22
 
 # define mapWidth 24
 # define mapHeight 24
+
+# define DOUBLE_MAX 1.797693e+308
+# define PI 3.1415926535
 //EVENTS ENUM
 enum e_events {
 	ON_KEYDOWN = 2,

@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/04 17:13:37 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 01:26:25 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int world[mapWidth][mapHeight]=
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -44,10 +44,10 @@ void	go_straight(t_player *player)
 {
 	double	movspeed;
 
-	movspeed = 0.1;
-	if (!world[(int)(player->pos.x + player->dir.x * movspeed)][(int)player->pos.y])
+	movspeed = 0.2;
+	if (world[(int)(player->pos.x + player->dir.x * movspeed)][(int)player->pos.y] == 0)
 		player->pos.x += player->dir.x * movspeed;
-	if (!world[(int)player->pos.x][(int)(player->pos.y + player->dir.y * movspeed)])
+	if (world[(int)player->pos.x][(int)(player->pos.y + player->dir.y * movspeed)] == 0)
 		player->pos.y += player->dir.y * movspeed;
 }
 
@@ -56,9 +56,9 @@ void	go_back(t_player *player)
 	double	movspeed;
 
 	movspeed = 0.1;
-	if (!world[(int)(player->pos.x - player->dir.x * movspeed)][(int)player->pos.y])
+	if (world[(int)(player->pos.x - player->dir.x * movspeed)][(int)player->pos.y] == 0)
 		player->pos.x -= player->dir.x * movspeed;
-	if (!world[(int)player->pos.x][(int)(player->pos.y - player->dir.y * movspeed)])
+	if (world[(int)player->pos.x][(int)(player->pos.y - player->dir.y * movspeed)] == 0)
 		player->pos.y -= player->dir.y * movspeed;
 }
 
@@ -68,7 +68,7 @@ void	rotate_right(t_player *player)
 	double old_plane_x;
 	double	rotspeed;
 	
-	rotspeed = 0.033 * 1.8;
+	rotspeed =  0.033 * 1.8;
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(-rotspeed) - player->dir.y * sin(-rotspeed);
 	player->dir.y = old_dir_x * sin(-rotspeed) + player->dir.y * cos(-rotspeed);
@@ -92,6 +92,29 @@ void	rotate_left(t_player *player)
 	player->plane.y = old_plane_x * sin(rotspeed) + player->plane.y * cos(rotspeed);
 }
 
+void	go_left(t_player *player)
+{
+	double	movspeed;
+
+	movspeed = 0.1;
+	if (world[(int)(player->pos.x - player->dir.y * movspeed)][(int)player->pos.y] == 0)
+		player->pos.x -= player->dir.y * movspeed;
+	if (world[(int)player->pos.x][(int)(player->pos.y + player->dir.x * movspeed)] == 0)
+		player->pos.y += player->dir.x * movspeed;
+}
+
+void	go_right(t_player *player)
+{
+	double	movspeed;
+
+	movspeed = 0.1;
+	if (world[(int)(player->pos.x + player->dir.y * movspeed)][(int)player->pos.y] == 0)
+		player->pos.x += player->dir.y * movspeed;
+	if (world[(int)player->pos.x][(int)(player->pos.y - player->dir.x * movspeed)] == 0)
+		player->pos.y -= player->dir.x * movspeed;
+}
+
+
 int	key_event(int keycode, t_player *player)
 {	
 	mlx_destroy_image(player->game->window.mlx, player->game->image.img);
@@ -104,9 +127,13 @@ int	key_event(int keycode, t_player *player)
 		go_straight(player);
 	if (keycode == KEYCODE_S)
 		go_back(player);
-	if (keycode == KEYCODE_D)
-		rotate_right(player);
 	if (keycode == KEYCODE_A)
+		go_left(player);
+	if (keycode == KEYCODE_D)
+		go_right(player);
+	if (keycode == KEYCODE_RIGHT_ARROW)
+		rotate_right(player);
+	if (keycode == KEYCODE_LEFT_ARROW)
 		rotate_left(player);
 	draw_map(&(player)->game->image, player->game, *player, *(player)->texture);
 	return (0);

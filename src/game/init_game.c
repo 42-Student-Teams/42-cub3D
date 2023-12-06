@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/04 17:23:57 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 01:26:47 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int worldMap[mapWidth][mapHeight]=
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -46,8 +46,8 @@ void init_player(t_player *player, t_game *game, t_canvas *texture)
 	player->game = game;
 	player->pos.x = 22; //(double)game->playerpos.x;	
 	player->pos.y = 12; //(double)game->playerpos.y;	
-	player->dir.x = -1;
-	player->dir.y = 0;
+	player->dir.x = -1.0;
+	player->dir.y = 0.0;
 	player->plane.x = 0;
 	player->plane.y = 0.66; // for the player FOV (field of view)
 }
@@ -67,7 +67,7 @@ void	evaluate_ray(t_player player, t_ray *ray)
 	else
 	{
 		ray->step.x = 1;
-		ray->side_dist.x = (ray->square.x + 1.0 - player.pos.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
+		ray->side_dist.x = (ray->square.x + 1 - player.pos.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
 	}
 	if (ray->dir.y < 0)
 	{
@@ -77,7 +77,7 @@ void	evaluate_ray(t_player player, t_ray *ray)
 	else
 	{
 		ray->step.y = 1;
-		ray->side_dist.y = (ray->square.y + 1.0 - player.pos.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
+		ray->side_dist.y = (ray->square.y + 1 - player.pos.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
 	}
 }
 
@@ -118,11 +118,11 @@ void	calculate_wall(t_cam *cam)
 {
 	int	line_height;
 
-	line_height = (int)(SCREEN_H / cam->wall_dist);
-	cam->start = (-1 * line_height / 2) + (SCREEN_H / 2);
+	line_height = (int)((double)SCREEN_H / cam->wall_dist);
+	cam->start = (-1 * line_height) + (SCREEN_H / 2);
 	if (cam->start < 0)
 		cam->start = 0;
-	cam->end = (line_height / 2) + (SCREEN_H / 2);
+	cam->end = line_height + SCREEN_H / 2;
 	if (cam->end >= SCREEN_H)
 		cam->end = SCREEN_H - 1;
 }
@@ -134,16 +134,16 @@ void	draw_line(t_canvas *img, t_cam	*cam, int x, int color)
 
 	start = cam->start;
 	end = cam->end;
-	while (start <= end)
+	while (start < end)
 	{
 		my_mlx_pixel_put(img, x, start, color);
 		start++;
 	}
 }
 
-void	my_mlx_texture_put(t_canvas *data, int x, int y, t_canvas *tex, int tex_x, int tex_y)
+void	my_mlx_texture_put(t_canvas *data, int x, int y, int color)
 {
-	data->addr[y * data->line_length / 4 + x] = tex->addr[tex_y * tex->line_length / 4 + tex_x];
+	data->addr[y * data->line_length / 4 + x] = color;
 }
 
 void	draw_map(t_canvas *img, t_game *game, t_player player, t_canvas	texture)
@@ -156,7 +156,7 @@ void	draw_map(t_canvas *img, t_game *game, t_player player, t_canvas	texture)
 	x = -1;
 	while (++x < SCREEN_W)
 	{
-		cam.camera_x = 2 * x / (double)SCREEN_W - 1; // x coordinate on the camera plane, so we have -1 on the left of the screen , 0 in the middle and 1 on the right.
+		cam.camera_x =  2 * x / (double)(SCREEN_W) - 1; // x coordinate on the camera plane, so we have -1 on the left of the screen , 0 in the middle and 1 on the right.
 		// ray vector calculation
 		ray.dir.x = player.dir.x + player.plane.x * cam.camera_x;
 		ray.dir.y = player.dir.y + player.plane.y * cam.camera_x;
@@ -185,14 +185,17 @@ void	draw_map(t_canvas *img, t_game *game, t_player player, t_canvas	texture)
 			tex_x = texture.width - tex_x - 1;
       	if(side == 1 && ray.dir.y < 0) 
 			tex_x = texture.width - tex_x - 1;
-		int line_height = (int)(SCREEN_H / cam.wall_dist);
-		double step = 1.0 * texture.height / line_height;
-		double tex_pos = (cam.start - SCREEN_H / 2 + line_height / 2) * step;
-		while (cam.start < cam.end)
+		int line_height = (int)((double)SCREEN_H / cam.wall_dist);
+		double step = 1.0 * (double)texture.height / line_height;
+		double tex_pos = ((double)(cam.start - SCREEN_H / 2 + line_height / 2)) * step;
+		while (cam.start <= cam.end)
 		{
-			int tex_y = (int)tex_pos & (texture.height - 1);
+			int tex_y = (int)tex_pos & texture.height - 1;
+			int color =  texture.addr[tex_y * texture.line_length / 4 + tex_x];
+			if (side == 0)
+				color /= 2;
 			tex_pos += step;
-			my_mlx_texture_put(img, x, cam.start, &texture, tex_x, tex_y);
+			my_mlx_texture_put(img, x, cam.start, color);
 			cam.start++;
 		} 
 		//draw_line(img, &cam, x, color);
@@ -207,15 +210,12 @@ int	init_game(t_game *game)
 	t_canvas	texture;
 
 	init_player(&player, game, &texture);
-	printf("posX = %d, posY = %d\n", game->playerpos.x, game->playerpos.y);
-	printf("posX = %f, posY = %f\n", player.pos.x, player.pos.y);
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
 	game->image.img = mlx_new_image(game->window.mlx, SCREEN_W, SCREEN_H);
 	game->image.addr = (int *)mlx_get_data_addr(game->image.img, &game->image.pixel_bits,
-			&game->image.line_length, &game->image.endian);
-	
+	 		&game->image.line_length, &game->image.endian);
 	texture.img = mlx_xpm_file_to_image(game->window.win, "maps/textures/red.xpm", &texture.width, &texture.height);
 	texture.addr = (int *)mlx_get_data_addr(texture.img, &texture.pixel_bits, &texture.line_length, &texture.endian);
 	draw_map(&game->image, game, player, texture);
@@ -225,3 +225,74 @@ int	init_game(t_game *game)
 	mlx_loop(game->window.mlx);
 	exit (0);
 }
+ /*
+void	draw_2Dmap(t_game *game, t_player *player)
+{
+	int i;
+	int j;
+	int side;
+	int color;
+	
+	i = -1;
+	while(++i < SCREEN_W)
+	{
+		j = -1;
+		while(++j < SCREEN_H)
+			my_mlx_pixel_put(&game->image, i, j, WHITE / 3);
+	}
+	i = -1;
+	side = 50;
+	while(++i < 8)
+	{
+		j = -1;
+		while(++j < 12)
+		{
+			printf("%d ", worldMap[i][j]);
+			if (worldMap[i][j] == 1)
+				color = RED;
+			else
+				color = WHITE;
+			draw_square(j * side, i * side, &game->image, color, side - 1);
+		}
+		printf("\n");
+	}
+	draw_square(player->pos.x * side, player->pos.y * side, &game->image, GREEN, 25);
+	i = -1;
+	while (++i < 20)
+	{
+		my_mlx_pixel_put(&game->image, player->pos.x * side + 99, player->pos.y * side + 99, GREEN);
+	}
+	mlx_put_image_to_window(game->window.mlx, game->window.win, game->image.img, 0, 0);
+	
+}
+
+int	event(int keycode, t_player *player)
+{
+	mlx_destroy_image(player->game->window.mlx, player->game->image.img);
+	player->game->image.img = mlx_new_image(player->game->window.mlx, SCREEN_W, SCREEN_H);
+	player->game->image.addr = (int *)mlx_get_data_addr(player->game->image.img, &player->game->image.pixel_bits,
+			&player->game->image.line_length, &player->game->image.endian);	
+	if (keycode == KEYCODE_ESC)
+		close_window(player->game);
+	if (keycode == KEYCODE_W)
+	{
+		player->pos.x -= sin(player->plane.x);
+		player->pos.y -= cos(player->plane.x);
+	}
+	if (keycode == KEYCODE_S)
+	{
+		player->pos.x += sin(player->plane.x);
+		player->pos.y += cos(player->plane.x);
+	}
+	if (keycode == KEYCODE_D)
+	{
+		player->plane.x -= 0.1;
+	}
+	if (keycode == KEYCODE_A)
+	{
+		player->plane.x += 0.1;
+	}
+	draw_2Dmap(player->game, player);
+	return 0;
+}
+*/
