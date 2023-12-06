@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:54:52 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/06 12:29:08 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:23:36 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	evaluate_ray(t_player player, t_ray *ray)
 	else
 	{
 		ray->step.x = 1;
-		ray->side_dist.x = (ray->square.x + 1 - player.pos.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
+		ray->side_dist.x = (ray->square.x + 1.0 - player.pos.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
 	}
 	if (ray->dir.y < 0)
 	{
@@ -32,7 +32,7 @@ void	evaluate_ray(t_player player, t_ray *ray)
 	else
 	{
 		ray->step.y = 1;
-		ray->side_dist.y = (ray->square.y + 1 - player.pos.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
+		ray->side_dist.y = (ray->square.y + 1.0 - player.pos.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
 	}
 }
 
@@ -55,21 +55,12 @@ void	dda_algorithme(t_game *game, t_ray *ray, int *side)
 			ray->square.y += ray->step.y;
 			*side = 1;
 		}
-		printf("game map first line\n");
-		for (int i = 0; i < game->size.x; ++i)
-			printf("%d ", game->map[0][i]);
-		printf("\n");
-		printf("rays: x = %d, y = %d\n", ray->square.x, ray->square.y);
-		if (ray->square.y < 0)
-			ray->square.y = 0;
-		if (ray->square.x < 0)
-			ray->square.x = 0;
 		if (game->map[ray->square.x][ray->square.y] > 0)
 			hit = 1;
 	}
 }
 
-int	find_wall_dist(t_ray ray, int side)
+double	find_wall_dist(t_ray ray, int side)
 {
 	if (side == 0)
 		return ray.side_dist.x - ray.delta_dist.x;
@@ -81,10 +72,10 @@ void	calculate_wall(t_cam *cam)
 	int	line_height;
 
 	line_height = (int)((double)SCREEN_H / cam->wall_dist);
-	cam->start = (-1 * line_height) + (SCREEN_H / 2);
+	cam->start = -line_height / 2 + SCREEN_H / 2;
 	if (cam->start < 0)
 		cam->start = 0;
-	cam->end = line_height + SCREEN_H / 2;
+	cam->end = line_height / 2 + SCREEN_H / 2;
 	if (cam->end >= SCREEN_H)
 		cam->end = SCREEN_H - 1;
 }

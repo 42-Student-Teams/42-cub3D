@@ -6,33 +6,20 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/06 12:33:31 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:56:45 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-int world[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-
-};
 
 void	go_straight(t_player *player)
 {
 	double	movspeed;
 
 	movspeed = 0.2;
-	if (world[(int)(player->pos.x + player->dir.x * movspeed)][(int)player->pos.y] == 0)
+	if (player->game->map[(int)(player->pos.x + player->dir.x * movspeed * 2)][(int)player->pos.y] == 0)
 		player->pos.x += player->dir.x * movspeed;
-	if (world[(int)player->pos.x][(int)(player->pos.y + player->dir.y * movspeed)] == 0)
+	if (player->game->map[(int)player->pos.x][(int)(player->pos.y + player->dir.y * movspeed)] == 0)
 		player->pos.y += player->dir.y * movspeed;
 }
 
@@ -41,9 +28,9 @@ void	go_back(t_player *player)
 	double	movspeed;
 
 	movspeed = 0.1;
-	if (world[(int)(player->pos.x - player->dir.x * movspeed)][(int)player->pos.y] == 0)
+	if (player->game->map[(int)(player->pos.x - player->dir.x * movspeed * 2)][(int)player->pos.y] == 0)
 		player->pos.x -= player->dir.x * movspeed;
-	if (world[(int)player->pos.x][(int)(player->pos.y - player->dir.y * movspeed)] == 0)
+	if (player->game->map[(int)player->pos.x][(int)(player->pos.y - player->dir.y * movspeed)] == 0)
 		player->pos.y -= player->dir.y * movspeed;
 }
 
@@ -55,11 +42,11 @@ void	rotate_right(t_player *player)
 	
 	rotspeed =  0.033 * 1.8;
 	old_dir_x = player->dir.x;
-	player->dir.x = player->dir.x * cos(-rotspeed) - player->dir.y * sin(-rotspeed);
-	player->dir.y = old_dir_x * sin(-rotspeed) + player->dir.y * cos(-rotspeed);
+	player->dir.x = player->dir.x * cos(-rotspeed / 2) - player->dir.y * sin(-rotspeed / 2);
+	player->dir.y = old_dir_x * sin(-rotspeed / 2) + player->dir.y * cos(-rotspeed / 2);
 	old_plane_x = player->plane.x;
-	player->plane.x = player->plane.x * cos(-rotspeed) - player->plane.y * sin(-rotspeed);
-	player->plane.y = old_plane_x * sin(-rotspeed) + player->plane.y * cos(-rotspeed);
+	player->plane.x = player->plane.x * cos(-rotspeed / 2) - player->plane.y * sin(-rotspeed / 2);
+	player->plane.y = old_plane_x * sin(-rotspeed / 2) + player->plane.y * cos(-rotspeed / 2);
 }
 
 void	rotate_left(t_player *player)
@@ -70,11 +57,11 @@ void	rotate_left(t_player *player)
 
 	rotspeed = 0.033 * 1.8;
 	old_dir_x = player->dir.x;
-	player->dir.x = player->dir.x * cos(rotspeed) - player->dir.y * sin(rotspeed);
-	player->dir.y = old_dir_x * sin(rotspeed) + player->dir.y * cos(rotspeed);
+	player->dir.x = player->dir.x * cos(rotspeed / 2) - player->dir.y * sin(rotspeed / 2);
+	player->dir.y = old_dir_x * sin(rotspeed / 2) + player->dir.y * cos(rotspeed / 2);
 	old_plane_x = player->plane.x;
-	player->plane.x = player->plane.x * cos(rotspeed) - player->plane.y * sin(rotspeed);
-	player->plane.y = old_plane_x * sin(rotspeed) + player->plane.y * cos(rotspeed);
+	player->plane.x = player->plane.x * cos(rotspeed / 2) - player->plane.y * sin(rotspeed / 2);
+	player->plane.y = old_plane_x * sin(rotspeed / 2) + player->plane.y * cos(rotspeed / 2);
 }
 
 void	go_left(t_player *player)
@@ -82,9 +69,9 @@ void	go_left(t_player *player)
 	double	movspeed;
 
 	movspeed = 0.1;
-	if (world[(int)(player->pos.x - player->dir.y * movspeed)][(int)player->pos.y] == 0)
+	if (player->game->map[(int)(player->pos.x - player->dir.y * movspeed * 2)][(int)player->pos.y] == 0)
 		player->pos.x -= player->dir.y * movspeed;
-	if (world[(int)player->pos.x][(int)(player->pos.y + player->dir.x * movspeed)] == 0)
+	if (player->game->map[(int)player->pos.x][(int)(player->pos.y + player->dir.x * movspeed * 2)] == 0)
 		player->pos.y += player->dir.x * movspeed;
 }
 
@@ -93,9 +80,9 @@ void	go_right(t_player *player)
 	double	movspeed;
 
 	movspeed = 0.1;
-	if (world[(int)(player->pos.x + player->dir.y * movspeed)][(int)player->pos.y] == 0)
+	if (player->game->map[(int)(player->pos.x + player->dir.y * movspeed * 2)][(int)player->pos.y] == 0)
 		player->pos.x += player->dir.y * movspeed;
-	if (world[(int)player->pos.x][(int)(player->pos.y - player->dir.x * movspeed)] == 0)
+	if (player->game->map[(int)player->pos.x][(int)(player->pos.y - player->dir.x * movspeed * 2)] == 0)
 		player->pos.y -= player->dir.x * movspeed;
 }
 

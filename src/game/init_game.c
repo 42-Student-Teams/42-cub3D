@@ -6,33 +6,18 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/06 12:36:57 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:37:08 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,1},
-
-};
-
 void init_player(t_player *player, t_game *game, t_canvas *texture)
 {
 	player->texture = texture;
 	player->game = game;
-	player->pos.x = (double)game->playerpos.x;	
-	player->pos.y = (double)game->playerpos.y;	
-	printf("player pos game -> x : %d, y : %d\n", game->playerpos.x, game->playerpos.y);
-	printf("player pos -> x : %f, y : %f\n", player->pos.x, player->pos.y);
+	player->pos.x = 4;	
+	player->pos.y = 4;	
 	player->dir.x = -1.0;
 	player->dir.y = 0.0;
 	player->plane.x = 0;
@@ -42,81 +27,6 @@ void init_player(t_player *player, t_game *game, t_canvas *texture)
 void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
 {
 	data->addr[y * data->line_length / 4 + x] = color;
-}
-
-void	evaluate_ray(t_player player, t_ray *ray)
-{
-	if (ray->dir.x < 0)
-	{
-		ray->step.x = -1;
-		ray->side_dist.x = (player.pos.x - ray->square.x) * ray->delta_dist.x;
-	}
-	else
-	{
-		ray->step.x = 1;
-		ray->side_dist.x = (ray->square.x + 1 - player.pos.x) * ray->delta_dist.x; // + 1 parce que le mur est a droite
-	}
-	if (ray->dir.y < 0)
-	{
-		ray->step.y = -1;
-		ray->side_dist.y = (player.pos.y - ray->square.y) * ray->delta_dist.y;
-	}
-	else
-	{
-		ray->step.y = 1;
-		ray->side_dist.y = (ray->square.y + 1 - player.pos.y) * ray->delta_dist.y; // + 1 parce que le mur est en haut
-	}
-}
-
-void	dda_algorithme(t_game *game, t_ray *ray, int *side)
-{
-	int	hit;
-
-	hit = 0;
-	(void)game;
-	while (hit == 0)
-	{
-		if (ray->side_dist.x < ray->side_dist.y)
-		{
-			ray->side_dist.x += ray->delta_dist.x;
-			ray->square.x += ray->step.x;
-			*side = 0;
-		}
-		else
-		{
-			ray->side_dist.y += ray->delta_dist.y;
-			ray->square.y += ray->step.y;
-			*side = 1;
-		}
-		printf("game map first line\n");
-		for (int i = 0; i < mapWidth; ++i)
-			printf("%d ", worldMap[0][i]);
-		printf("\n");
-		printf("rays: x = %d, y = %d\n", ray->square.x, ray->square.y);
-		// if (game->map[ray->square.y][ray->square.x] > 0)
-		if (worldMap[ray->square.x][ray->square.y] > 0)
-			hit = 1;
-	}
-}
-
-int	find_wall_dist(t_ray ray, int side)
-{
-	if (side == 0)
-		return ray.side_dist.x - ray.delta_dist.x;
-	return ray.side_dist.y - ray.delta_dist.y;
-}
-
-void	calculate_wall(t_cam *cam)
-{
-	int	line_height;
-
-	line_height = (int)((double)SCREEN_H / cam->wall_dist);
-	cam->start = (-1 * line_height) + (SCREEN_H / 2);
-	if (cam->start < 0)
-		cam->start = 0;
-	cam->end = line_height + SCREEN_H / 2;
-	if (cam->end >= SCREEN_H)
-		cam->end = SCREEN_H - 1;
 }
 
 void	draw_line(t_canvas *img, t_cam	*cam, int x, int color)
@@ -165,6 +75,7 @@ void	draw_map(t_canvas *img, t_game *game, t_player player, t_canvas	texture)
 		dda_algorithme(game, &ray, &side); // find where a ray hit a wall
 		cam.wall_dist = find_wall_dist(ray, side);
 		calculate_wall(&cam);
+		// nettoyer
 		double wall_x;
 		if (side == 0)
 			wall_x = player.pos.y + cam.wall_dist * ray.dir.y;
