@@ -6,7 +6,11 @@
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/07 13:30:31 by bverdeci         ###   ########.fr       */
+=======
+/*   Updated: 2023/12/07 13:17:01 by lsaba-qu         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +26,7 @@ static void	is_player(t_game *game, int y, int x)
 		game->playerpos.x = y;
 		game->playerpos.y = x;
 		game->cardinal = game->map[y][x];
+		game->map[y][x] = 0;
 	}
 }
 
