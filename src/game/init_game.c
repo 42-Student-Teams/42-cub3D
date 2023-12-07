@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 12:04:00 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:02:17 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void	init_player(t_player *player, t_game *game)
 	player->dir.y = 0.0;
 	player->plane.x = 0;
 	player->plane.y = 0.66;
+	ft_bzero(&player->cam, sizeof(t_cam));
+	ft_bzero(&player->ray, sizeof(t_ray));
+	player->wall_x = 0;
+	player->step = 0;
+	player->tex_pos = 0;
+	player->tex_x = 0;
+	player->tex_y = 0;
+	player->line_height = 0;
+	player->tex_dir = 0;
 }
 
 t_canvas	*init_texture(t_game *game)
@@ -77,8 +86,7 @@ int	init_game(t_game *game)
 {
 	t_player	player;
 
-	ft_bzero(&player, sizeof(t_player));
-
+	printf("STARTING SCREEN\n");
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
