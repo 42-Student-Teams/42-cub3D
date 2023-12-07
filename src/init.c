@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 11:31:58 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:30:31 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 	new = NULL;
 	i = 0;
+	len = 0;
 	new = ft_calloc(game->size.x + 1, sizeof(char));
 	if (!*temp)
 		error("Malloc line failed");
@@ -82,6 +83,7 @@ void	generate_map(t_game *game, int fd, char *temp)
 	int		y;
 	char	*new_line;
 
+	x = 0;
 	y = 0;
 	new_line = NULL;
 	while (temp)

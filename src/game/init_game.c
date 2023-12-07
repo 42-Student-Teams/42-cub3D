@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 13:02:17 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:10:57 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,12 @@
 void	init_player(t_player *player, t_game *game)
 {
 	player->game = game;
-	player->pos.x = 4;
-	player->pos.y = 5;
+	player->pos.x = game->playerpos.x;
+	player->pos.y = game->playerpos.y;
 	player->dir.x = -1.0;
 	player->dir.y = 0.0;
 	player->plane.x = 0;
 	player->plane.y = 0.66;
-	ft_bzero(&player->cam, sizeof(t_cam));
-	ft_bzero(&player->ray, sizeof(t_ray));
-	player->wall_x = 0;
-	player->step = 0;
-	player->tex_pos = 0;
-	player->tex_x = 0;
-	player->tex_y = 0;
-	player->line_height = 0;
-	player->tex_dir = 0;
 }
 
 t_canvas	*init_texture(t_game *game)
@@ -82,11 +73,40 @@ int	rgb_to_int(t_rgb rgb)
 	return (((r & 0x0ff) << 16) | ((g & 0x0ff) << 8) | (b & 0x0ff));
 }
 
+void	draw_map(t_game *game, t_player *p)
+{
+	int	x;
+	int	side;		
+
+	x = -1;
+	x = 0;
+	side = 0;
+	while (++x < SCREEN_W)
+	{
+		p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;
+		p->ray.dir.x = p->dir.x + p->plane.x * p->cam.camera_x;
+		p->ray.dir.y = p->dir.y + p->plane.y * p->cam.camera_x;
+		p->ray.square.x = (int)p->pos.x;
+		p->ray.square.y = (int)p->pos.y;
+		p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
+		p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
+		evaluate_ray(*p, &p->ray);
+		dda_algorithme(game, &p->ray, &side);
+		p->cam.wall_dist = find_wall_dist(p->ray, side);
+		calculate_wall(&p->cam);
+		draw_ceiling(&game->image, p->cam.start, x, game->ceiling);
+		draw_walls(side, p, game, x);
+		draw_floor(&game->image, p->cam.end, x, game->floor);
+	}
+	mlx_put_image_to_window(game->window.mlx, game->window.win,
+		game->image.img, 0, 0);
+}
+
 int	init_game(t_game *game)
 {
 	t_player	player;
 
-	printf("STARTING SCREEN\n");
+	ft_bzero(&player, sizeof(t_player));
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
@@ -94,6 +114,7 @@ int	init_game(t_game *game)
 	game->image.addr = (int *)mlx_get_data_addr(game->image.img,
 			&game->image.pixel_bits,
 			&game->image.line_length, &game->image.endian);
+	printf("cam vals : %f %d\n", player.cam.camera_x, player.cam.start);
 	player.texture = init_texture(game);
 	game->floor = rgb_to_int(game->xpm.rgbf);
 	game->ceiling = rgb_to_int(game->xpm.rgbc);
