@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 11:31:58 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:16:05 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	is_player(t_game *game, int y, int x)
 		game->playerpos.x = y;
 		game->playerpos.y = x;
 		game->cardinal = game->map[y][x];
+		game->map[y][x] = 0;
 	}
 }
 
