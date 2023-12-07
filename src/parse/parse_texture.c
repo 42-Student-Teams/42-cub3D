@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/07 12:18:57 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:22:37 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static void	skip_line(char **temp, int fd)
 
 static int	get_color_file(char *temp, t_game *game, int i)
 {
-	if (temp[0] == 'F' && temp[1] == ' ' &&  ++i && ++game->xpm.cptcolors)
+	if (temp[0] == 'F' && temp[1] == ' ' && ++i && ++game->xpm.cptcolors)
 		game->xpm.floor = ft_strdup(temp + 2);
 	else if (temp[0] == 'C' && temp[1] == ' ' && ++i && ++game->xpm.cptcolors)
 		game->xpm.ceiling = ft_strdup(temp + 2);
 	return (i);
 }
 
-static int set_texture(char *temp, t_game *game, int cpt[4], int i)
+static int	set_texture(char *temp, t_game *game, int cpt[4], int i)
 {
 	if (temp[0] == 'N' && temp[1] == 'O' && ++cpt[0] && ++i)
 		game->xpm.no = ft_strdup(temp + 2);
@@ -141,11 +141,12 @@ static char	*remove_all_spaces(const char *str)
 {
 	int			count;
 	const char	*temp;
-	char 		*result;
+	char		*result;
+	int			j;
 
 	count = 0;
 	if (str == NULL)
-		return NULL;
+		return (NULL);
 	temp = str;
 	while (*temp)
 	{
@@ -155,8 +156,8 @@ static char	*remove_all_spaces(const char *str)
 	}
 	result = (char *)malloc(count + 1);
 	if (result == NULL)
-		return NULL;
-	int j = 0;
+		return (NULL);
+	j = 0;
 	while (*str)
 	{
 		if (*str != ' ')
@@ -169,11 +170,19 @@ static char	*remove_all_spaces(const char *str)
 
 static t_rgb	big_trim(char **str)
 {
-	t_rgb rgb;
+	t_rgb	rgb;
+	char	*temp;
 
-	rgb.r = ft_atoi(remove_all_spaces(str[0]));
-	rgb.g = ft_atoi(remove_all_spaces(str[1]));
-	rgb.b = ft_atoi(remove_all_spaces(str[2]));
+	temp = NULL;
+	temp = remove_all_spaces(str[0]);
+	rgb.r = ft_atoi(temp);
+	free(temp);
+	temp = remove_all_spaces(str[1]);
+	rgb.g = ft_atoi(temp);
+	free(temp);
+	temp = remove_all_spaces(str[2]);
+	rgb.b = ft_atoi(temp);
+	free(temp);
 	return (rgb);
 }
 
@@ -187,11 +196,23 @@ static void	check_color_rgb(t_rgb new_rgb)
 		error("Invalid color value");
 }
 
+int	len_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
 static t_rgb get_color_value(char *str)
 {
 	t_rgb	new_rgb;
 	char	**temp;
+	int 	i;
 
+	i = -1;
 	new_rgb = (t_rgb){0, 0, 0};
 	temp = ft_split(str, ',');
 	skip_spaces(&temp[0]);
