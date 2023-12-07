@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:51:36 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:04:00 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	init_game(t_game *game)
 	t_player	player;
 
 	ft_bzero(&player, sizeof(t_player));
+
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");

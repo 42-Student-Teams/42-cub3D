@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 00:36:49 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:13:25 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_game
 	t_texture	xpm;
 	int			floor;
 	int			ceiling;
+	int			cardinal;
 }	t_game;
 
 typedef struct s_ray
@@ -142,6 +143,7 @@ typedef struct s_player
 	int			tex_y;
 	int			line_height;
 	int			tex_dir;
+
 }	t_player;
 
 #endif

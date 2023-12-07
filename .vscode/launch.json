@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/lsaba-qu/Documents/Cube-3D/src",
-      "program": "/Users/lsaba-qu/Documents/Cube-3D/src/build/Debug/outDebug"
+      "cwd": "/Users/lsaba-qu/Documents/42-cub3D/src",
+      "program": "/Users/lsaba-qu/Documents/42-cub3D/src/build/Debug/outDebug"
     }
   ]
 }

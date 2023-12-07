@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/11/18 17:29:01 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:31:58 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	is_player(t_game *game, int y, int x)
 {
-	if (game->map[y][x] == 'N'
-		|| game->map[y][x] == 'S'
-		|| game->map[y][x] == 'E'
-		|| game->map[y][x] == 'W')
+	if (game->map[y][x] == PLAYER_N
+		|| game->map[y][x] == PLAYER_S
+		|| game->map[y][x] == PLAYER_W
+		|| game->map[y][x] == PLAYER_E)
 	{
 		game->playerpos.x = y;
 		game->playerpos.y = x;
+		game->cardinal = game->map[y][x];
 	}
 }
-
 
 static void	fill_start_line(char *new)
 {
@@ -34,7 +34,7 @@ static void	fill_start_line(char *new)
 		new[i] = ' ';
 }
 
-static void fill_end_line(t_game *game, char *new, int i)
+static void	fill_end_line(t_game *game, char *new, int i)
 {
 	while (i < game->size.x)
 	{
@@ -42,7 +42,6 @@ static void fill_end_line(t_game *game, char *new, int i)
 		i++;
 	}
 }
-
 
 static char	*line_fill_wall(t_game *game, char **temp)
 {
@@ -67,19 +66,17 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 static char	*fill_line(char *temp, t_game *game)
 {
-	char *new_line;
+	char	*new_line;
 
 	new_line = NULL;
-	printf("temp : \t%s\n", temp);
 	if ((int)ft_strlen(temp) < game->size.x)
 		new_line = line_fill_wall(game, &temp);
 	else
 		new_line = temp;
-	printf("new : \t%s\n", new_line);
 	return (new_line);
 }
 
-void generate_map(t_game *game, int fd, char *temp)
+void	generate_map(t_game *game, int fd, char *temp)
 {
 	int		x;
 	int		y;
@@ -108,4 +105,3 @@ void generate_map(t_game *game, int fd, char *temp)
 	}
 	close(fd);
 }
-

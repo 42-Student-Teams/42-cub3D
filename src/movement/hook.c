@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 00:25:45 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:20:16 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	key_event(int keycode, t_player *player)
 
 int	close_window(t_game *game)
 {
-	mlx_destroy_image(game->window.mlx, game->window.win);
-	exit(0);
+	mlx_destroy_window(game->window.mlx, game->window.win);
+	exit(1);
 }

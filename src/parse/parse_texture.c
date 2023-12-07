@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <leon@student.1337.ma>                +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/11/10 16:48:40 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:18:57 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ static t_rgb get_color_value(char *str)
 	count_commas(temp);
 	new_rgb = big_trim(temp);
 	check_color_rgb(new_rgb);
+	free(temp);
 	return (new_rgb);
 }
 

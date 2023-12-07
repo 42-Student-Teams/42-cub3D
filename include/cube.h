@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 00:12:32 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:34:35 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		end_program(t_game *game);
 
 // INIT
 int			init_game(t_game *game);
-void 		init_player(t_player *player, t_game *game);
+void		init_player(t_player *player, t_game *game);
 
 // HOOK
 int			key_event(int keycode, t_player *player);
