@@ -6,11 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/09 10:39:37 by leon             ###   ########.fr       */
-=======
-/*   Updated: 2023/12/07 12:19:12 by lsaba-qu         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2023/12/07 13:04:28 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +50,8 @@ int	main(int ac, char **av)
 		arg_error(ac);
 	parse_map(av[1], &game);
 	parse_texture(av[1], &game);
-<<<<<<< HEAD
 	print_debug(&game);
 //	init_game(&game);
-=======
-	init_game(&game);
->>>>>>> main
 	return (0);
 }
 /*

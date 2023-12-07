@@ -6,11 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/09 10:29:27 by leon             ###   ########.fr       */
-=======
-/*   Updated: 2023/12/07 11:31:58 by lsaba-qu         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2023/12/07 13:04:42 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +67,12 @@ static char	*line_fill_wall(t_game *game, char **temp)
 static char	*fill_line(char *temp, t_game *game)
 {
 	char	*new_line;
-<<<<<<< HEAD
 	int 	len;
 
 	new_line = NULL;
 	len = (int)ft_strlen(temp);
 	if (temp[len-1] != '\n')
 		temp[len] = '\n';
-=======
-
-	new_line = NULL;
->>>>>>> main
 	if ((int)ft_strlen(temp) < game->size.x)
 		new_line = line_fill_wall(game, &temp);
 	else

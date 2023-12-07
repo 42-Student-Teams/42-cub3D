@@ -6,11 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/09 10:38:25 by leon             ###   ########.fr       */
-=======
-/*   Updated: 2023/12/07 11:34:35 by lsaba-qu         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2023/12/07 13:06:45 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +55,6 @@ void		check_wall(t_game *game);
 void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
-<<<<<<< HEAD
-=======
-t_canvas	init_image(void *mlx, char *filepath);
-int			hook_exit(t_game *game);
-int			key_hook(int key, t_game *game);
-int			hook_move(t_vector new_pos, t_game *game);
-void		end_program(t_game *game);
-
-//--- GAME ---
-
-// INIT
->>>>>>> main
 int			init_game(t_game *game);
 void		init_player(t_player *player, t_game *game);
 
