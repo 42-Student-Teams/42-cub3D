@@ -3,19 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/07 12:18:57 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:48:26 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
+int	ft_isspace(char c)
+{
+	if ((c >= '\t' && c <= '\r') || c == ' ')
+		return (1);
+	return (0);
+}
+
 static void	skip_spaces(char **temp)
 {
 	while (**temp == ' ')
 		(*temp)++;
+}
+
+static char	*skip_spaces_safe(char *temp)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	str = ft_calloc(5, sizeof(char));
+	if (!str)
+		error("malloc error");
+	i = 0;
+	j = 0;
+	while (ft_isspace(temp[i]))
+		i++;
+	while (temp[i])
+		str[j++] = temp[i++];
+	free(temp);
+	printf("len : %lu\n", strlen(str));
+	return (str);
 }
 
 static void	init_cardinal_cpt(int cpt[4])
@@ -137,31 +164,33 @@ static void	count_commas(char **rgb)
 		error("Only 3 values are allowed for RGB");
 }
 
-static char	*remove_all_spaces(const char *str)
+static char	*remove_all_spaces(char *str)
 {
 	int			count;
-	const char	*temp;
+	char		*temp;
 	char 		*result;
 
 	count = 0;
 	if (str == NULL)
 		return NULL;
 	temp = str;
-	while (*temp)
+	int j = 0;
+	while (temp[j])
 	{
-		if (*temp != ' ')
+		if (temp[j] != ' ')
 			++count;
-		++temp;
+		++j;
 	}
 	result = (char *)malloc(count + 1);
 	if (result == NULL)
 		return NULL;
-	int j = 0;
-	while (*str)
+	j = 0;
+	int	k = 0;
+	while (str[k])
 	{
-		if (*str != ' ')
-			result[j++] = *str;
-		++str;
+		if (str[k] != ' ')
+			result[j++] = str[k];
+		++k;
 	}
 	result[j] = '\0';
 	return (result);
@@ -169,7 +198,7 @@ static char	*remove_all_spaces(const char *str)
 
 static t_rgb	big_trim(char **str)
 {
-	t_rgb rgb;
+	t_rgb	rgb;
 
 	rgb.r = ft_atoi(remove_all_spaces(str[0]));
 	rgb.g = ft_atoi(remove_all_spaces(str[1]));
@@ -191,12 +220,15 @@ static t_rgb get_color_value(char *str)
 {
 	t_rgb	new_rgb;
 	char	**temp;
+	int		i;
 
+	printf("RGB line : %s\n", str);
 	new_rgb = (t_rgb){0, 0, 0};
 	temp = ft_split(str, ',');
-	skip_spaces(&temp[0]);
-	skip_spaces(&temp[1]);
-	skip_spaces(&temp[2]);
+	i = 0;
+	temp[0] = skip_spaces_safe(temp[0]);
+	temp[1] = skip_spaces_safe(temp[1]);
+	temp[2] = skip_spaces_safe(temp[2]);
 	count_commas(temp);
 	new_rgb = big_trim(temp);
 	check_color_rgb(new_rgb);
@@ -213,6 +245,7 @@ static void	parse_files(t_game *game)
 	skip_spaces(&game->xpm.floor);
 	skip_spaces(&game->xpm.ceiling);
 	game->xpm.rgbc = get_color_value(game->xpm.floor);
+	printf("tout bon mec\n");
 	game->xpm.rgbf = get_color_value(game->xpm.ceiling);
 }
 
