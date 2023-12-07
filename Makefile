@@ -35,14 +35,22 @@ SRCS		:= \
 	src/init.c						\
 	src/check/check.c				\
 	src/check/check_utils.c			\
+<<<<<<< HEAD
+=======
+	src/movement/hook.c				\
+	src/movement/move.c				\
+>>>>>>> main
 	src/parse/parse_map.c			\
 	src/parse/parse_texture.c		\
+	src/game/init_game.c			\
+	src/game/calculs.c				\
+	src/game/draw.c					\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 CC          := gcc
-CFLAGS      := -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS      := -Wall -Wextra -Werror #-fsanitize=address -g3
 CPPFLAGS    := $(addprefix -I,$(INCS))
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))

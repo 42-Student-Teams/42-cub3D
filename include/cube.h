@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/11/09 10:38:25 by leon             ###   ########.fr       */
+=======
+/*   Updated: 2023/12/07 11:34:35 by lsaba-qu         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +42,6 @@
 # include <errno.h>
 # include <math.h>
 
-
 int			init_map_size(char *path, t_game *game);
 int			get_nb_cols_map(char *path, t_game *game);
 void		parse_map(char *path, t_game *game);
@@ -56,6 +59,45 @@ void		check_wall(t_game *game);
 void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
+<<<<<<< HEAD
+=======
+t_canvas	init_image(void *mlx, char *filepath);
+int			hook_exit(t_game *game);
+int			key_hook(int key, t_game *game);
+int			hook_move(t_vector new_pos, t_game *game);
+void		end_program(t_game *game);
+
+//--- GAME ---
+
+// INIT
+>>>>>>> main
 int			init_game(t_game *game);
+void		init_player(t_player *player, t_game *game);
+
+// HOOK
+int			key_event(int keycode, t_player *player);
+int			close_window(t_game *game);
+
+// MOVE
+void		go_straight(t_player *player);
+void		go_back(t_player *player);
+void		rotate_right(t_player *player);
+void		rotate_left(t_player *player);
+void		go_left(t_player *player);
+void		go_right(t_player *player);
+
+// DRAW
+void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
+void		draw_map(t_game *game, t_player *p);
+void		draw_floor(t_canvas *img, int val, int x, int color);
+void		draw_ceiling(t_canvas *img, int val, int x, int color);
+void		draw_walls(int side, t_player *p, t_game *game, int x);
+
+// CALCULS
+void		evaluate_ray(t_player player, t_ray *ray);
+void		dda_algorithme(t_game *game, t_ray *ray, int *side);
+double		find_wall_dist(t_ray ray, int side);
+void		calculate_wall(t_cam *cam);
+void		walls_calculs(t_player *p, int side);
 
 #endif

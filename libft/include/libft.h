@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:22:05 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/03/28 23:50:08 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:13:34 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char		*ft_get_next_line(int fd);
 char		*ft_add_stock(const char *s1, const char *s2);
 int			ft_gnl_strchr(const char *str, char c);
 void		ft_putnbrendl_fd(long int num, int fd);
+int			ft_atoi_base(const char *str, const char *base);
 
 typedef struct s_list
 {

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42l>  +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/11/09 10:33:25 by leon             ###   ########.fr       */
+=======
+/*   Updated: 2023/12/07 11:56:54 by lsaba-qu         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +35,7 @@ static char	*skip_to_map(int fd, char *tmp)
 	return (NULL);
 }
 
-static int	isMapFilledWithWalls(t_game *game)
+static int	is_map_filled_walls(t_game *game)
 {
 	int	x;
 	int	y;
@@ -62,7 +66,7 @@ static int	isMapFilledWithWalls(t_game *game)
 void	parse_map(char *path, t_game *game)
 {
 	int		fd;
-	char 	*temp;
+	char	*temp;
 
 	fd = 0;
 	temp = NULL;
@@ -74,7 +78,7 @@ void	parse_map(char *path, t_game *game)
 	temp = skip_to_map(fd, temp);
 	generate_map(game, fd, temp);
 	check_min_amount(game);
-	if (isMapFilledWithWalls(game))
+	if (is_map_filled_walls(game))
 		error("Map is not surrounded by walls");
 }
 

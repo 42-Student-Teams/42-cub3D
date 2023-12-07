@@ -1,16 +1,25 @@
 NO ./maps/textures/eagle.xpm
-SO ./maps/textures/eagle.xpm
-WE ./maps/textures/eagle.xpm
-EA ./maps/textures/eagle.xpm
+SO ./maps/textures/red.xpm
+WE ./maps/textures/purplestone.xpm
+EA ./maps/textures/greystone.xpm
 
 F 70,70,70
 C 0,  111, 204
 
 11111111
+<<<<<<< HEAD
 10100001
 1000W001
 10001001
 10010001
 10010011
 10001011
+=======
+1W000001
+10000001
+10000001
+10000001
+10000001
+10000001
+>>>>>>> main
 11111111
