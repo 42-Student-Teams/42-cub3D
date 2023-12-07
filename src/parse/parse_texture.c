@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:24:14 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 17:24:15 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:37:17 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,14 +168,9 @@ static void	count_commas(char **rgb)
 static char	*remove_all_spaces(char *str)
 {
 	int			count;
-<<<<<<< HEAD
-	char		*temp;
-	char 		*result;
-=======
 	const char	*temp;
 	char		*result;
 	int			j;
->>>>>>> 253a35a579a9c83efbda0d04c1e8a14d2dff105f
 
 	count = 0;
 	if (str == NULL)
@@ -190,16 +185,9 @@ static char	*remove_all_spaces(char *str)
 	}
 	result = (char *)malloc(count + 1);
 	if (result == NULL)
-<<<<<<< HEAD
-		return NULL;
-	j = 0;
-	int	k = 0;
-	while (str[k])
-=======
 		return (NULL);
 	j = 0;
 	while (*str)
->>>>>>> 253a35a579a9c83efbda0d04c1e8a14d2dff105f
 	{
 		if (str[k] != ' ')
 			result[j++] = str[k];
@@ -212,10 +200,7 @@ static char	*remove_all_spaces(char *str)
 static t_rgb	big_trim(char **str)
 {
 	t_rgb	rgb;
-<<<<<<< HEAD
-=======
 	char	*temp;
->>>>>>> 253a35a579a9c83efbda0d04c1e8a14d2dff105f
 
 	temp = NULL;
 	temp = remove_all_spaces(str[0]);
@@ -254,15 +239,9 @@ static t_rgb get_color_value(char *str)
 {
 	t_rgb	new_rgb;
 	char	**temp;
-<<<<<<< HEAD
-	int		i;
-
-	printf("RGB line : %s\n", str);
-=======
 	int 	i;
 
 	i = -1;
->>>>>>> 253a35a579a9c83efbda0d04c1e8a14d2dff105f
 	new_rgb = (t_rgb){0, 0, 0};
 	temp = ft_split(str, ',');
 	i = 0;
