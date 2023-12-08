@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 11:20:16 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:50:37 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	key_event(int keycode, t_player *player)
 
 int	close_window(t_game *game)
 {
+	int	i;
+
+	i = -1;
+	while (++i < game->size.y)
+		free(game->map[i]);
+	free(game->map);
 	mlx_destroy_window(game->window.mlx, game->window.win);
 	exit(1);
 }

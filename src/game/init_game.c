@@ -3,36 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 12:04:00 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:40:35 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-/*	
-							:: TODO ::
-	
-	1. Plane x,y et dir x,y changent par rapport à la direction.
-	-> pour ça il me faut la direction de départ donc la lettre du joueur
-	-> N, S, W ou E 
-
-	2. La poition du joueur n'est pas gardé en mémoire.	
-	-> checker le moment ou les variables game.playerspos.x,y ont été initialisées.
-	
-*/
+void	player_direction(t_player *player, t_game *game)
+{
+	player->dir.x = 0.0;
+	player->dir.y = 1.0;
+	player->plane.x = 0.66;
+	player->plane.y = 0.0;
+	if (game->cardinal == PLAYER_N)
+	{
+		player->dir.x = -1.0;
+		player->dir.y = 0.0;
+		player->plane.x = 0;
+		player->plane.y = 0.66;
+	}
+	if (game->cardinal == PLAYER_S)
+	{
+		player->dir.x = 1.0;
+		player->dir.y = 0.0;
+		player->plane.x = 0;
+		player->plane.y = -0.66;
+	}
+	if (game->cardinal == PLAYER_W)
+	{
+		player->dir.x = 0.0;
+		player->dir.y = -1.0;
+		player->plane.x = -0.66;
+		player->plane.y = 0.0;
+	}
+}
 
 void	init_player(t_player *player, t_game *game)
 {
 	player->game = game;
-	player->pos.x = 4;
-	player->pos.y = 5;
-	player->dir.x = -1.0;
-	player->dir.y = 0.0;
-	player->plane.x = 0;
-	player->plane.y = 0.66;
+	player->pos.x = game->playerpos.x;
+	player->pos.y = game->playerpos.y;
+	player_direction(player, game);
 }
 
 t_canvas	*init_texture(t_game *game)
@@ -78,7 +92,6 @@ int	init_game(t_game *game)
 	t_player	player;
 
 	ft_bzero(&player, sizeof(t_player));
-
 	game->window.mlx = mlx_init();
 	game->window.win = mlx_new_window(game->window.mlx, SCREEN_W,
 			SCREEN_H, "Cube3D");
@@ -86,6 +99,7 @@ int	init_game(t_game *game)
 	game->image.addr = (int *)mlx_get_data_addr(game->image.img,
 			&game->image.pixel_bits,
 			&game->image.line_length, &game->image.endian);
+	printf("cam vals : %f %d\n", player.cam.camera_x, player.cam.start);
 	player.texture = init_texture(game);
 	game->floor = rgb_to_int(game->xpm.rgbf);
 	game->ceiling = rgb_to_int(game->xpm.rgbc);

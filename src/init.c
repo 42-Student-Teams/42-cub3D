@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 13:04:42 by lsaba-qu         ###   ########.fr       */
+/*   Created: 2023/12/07 14:14:01 by bverdeci          #+#    #+#             */
+/*   Updated: 2023/12/08 12:26:55 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	is_player(t_game *game, int y, int x)
 		game->playerpos.x = y;
 		game->playerpos.y = x;
 		game->cardinal = game->map[y][x];
+		game->map[y][x] = 0;
 	}
 }
 
@@ -51,6 +52,7 @@ static char	*line_fill_wall(t_game *game, char **temp)
 
 	new = NULL;
 	i = 0;
+	len = 0;
 	new = ft_calloc(game->size.x + 1, sizeof(char));
 	if (!*temp)
 		error("Malloc line failed");
@@ -86,6 +88,7 @@ void	generate_map(t_game *game, int fd, char *temp)
 	int		y;
 	char	*new_line;
 
+	x = 0;
 	y = 0;
 	new_line = NULL;
 	while (temp)

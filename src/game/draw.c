@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:53:07 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:11:49 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:40:48 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	draw_walls(int side, t_player *p, t_game *game, int x)
 	int		color;
 
 	walls_calculs(p, side);
+	color = 0;
 	while (p->cam.start <= p->cam.end)
 	{
 		p->tex_y = (int)p->tex_pos & p->texture[p->tex_dir].height - 1;
@@ -56,6 +57,8 @@ void	draw_map(t_game *game, t_player *p)
 	int	side;		
 
 	x = -1;
+	x = 0;
+	side = 0;
 	while (++x < SCREEN_W)
 	{
 		p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;

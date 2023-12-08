@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 13:06:45 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:25:58 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
 int			init_game(t_game *game);
 void		init_player(t_player *player, t_game *game);
+void		player_direction(t_player *player, t_game *game);
+t_canvas	*init_texture(t_game *game);
 
 // HOOK
 int			key_event(int keycode, t_player *player);
@@ -76,6 +78,7 @@ void		draw_map(t_game *game, t_player *p);
 void		draw_floor(t_canvas *img, int val, int x, int color);
 void		draw_ceiling(t_canvas *img, int val, int x, int color);
 void		draw_walls(int side, t_player *p, t_game *game, int x);
+int			rgb_to_int(t_rgb rgb);
 
 // CALCULS
 void		evaluate_ray(t_player player, t_ray *ray);
