@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 14:25:27 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:25:19 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_texture(char *temp, int fd, t_game *game)
 		skip_line(&temp, fd);
 		skip_spaces(&temp);
 		i = set_texture(temp, game, cpt, i);
-		if (i <  6)
+		if (i < 6)
 			check_texture(temp);
 		free(temp);
 		temp = ft_get_next_line(fd);
@@ -59,31 +59,23 @@ char	*remove_all_spaces(char *str)
 	char		*temp;
 	char		*result;
 	int			j;
-	int			k;
 
 	count = 0;
-	j = 0;
+	j = -1;
 	if (str == NULL)
 		return (NULL);
 	temp = str;
-	while (temp[j])
+	while (temp[++j])
 	{
 		if (temp[j] != ' ')
 			++count;
-		++j;
 	}
-	result = (char *)malloc(count + 1);
+	result = ft_calloc(count + 1, sizeof(char));
 	if (result == NULL)
 		return (NULL);
 	j = 0;
-	k = 0;
-	while (str[k])
-	{
-		if (str[k] != ' ')
-			result[j++] = str[k];
-		++k;
-	}
-	result[j] = '\0';
+	count = 0;
+	copy_result(str, result, count, j);
 	return (result);
 }
 

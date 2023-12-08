@@ -46,12 +46,13 @@ SRCS		:= \
 	src/parse/parse_texture_utils.c		\
 	src/parse/parse_texture_utils2.c	\
 	src/parse/parse_texture_utils3.c	\
+	src/parse/parse_texture_utils4.c	\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 CC          := gcc
-CFLAGS      := -Wall -Wextra -Werror -O3 -fsanitize=address -g3
+CFLAGS      := -Wall -Wextra -Werror -O3 #-fsanitize=address -g3
 CPPFLAGS    := $(addprefix -I,$(INCS))
 LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))
