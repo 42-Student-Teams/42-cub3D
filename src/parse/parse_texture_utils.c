@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 16:21:39 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:43:14 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	check_texture(char *temp)
 	if (ft_strcmp("\n", str) == 0)
 	{
 		free(str);
-		return (NULL);
+		return ;
 	}
 	if (ft_strcmp("NO", str)
 		&& (ft_strcmp("SO", str))
