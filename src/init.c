@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:14:01 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/08 12:26:55 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:14:03 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,8 @@ static char	*line_fill_wall(t_game *game, char **temp)
 static char	*fill_line(char *temp, t_game *game)
 {
 	char	*new_line;
-	int 	len;
 
 	new_line = NULL;
-	len = (int)ft_strlen(temp);
-	if (temp[len-1] != '\n')
-		temp[len] = '\n';
 	if ((int)ft_strlen(temp) < game->size.x)
 		new_line = line_fill_wall(game, &temp);
 	else
@@ -93,6 +89,8 @@ void	generate_map(t_game *game, int fd, char *temp)
 	new_line = NULL;
 	while (temp)
 	{
+		if (temp[0] == '\n')
+			error("Empty line in map");
 		x = -1;
 		game->map[y] = ft_calloc(game->size.x, sizeof(int));
 		if (!game->map[y])

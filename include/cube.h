@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 12:25:58 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:39:38 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,19 @@ void		check_min_amount(t_game *game);
 void		parse_texture(char *file, t_game *game);
 int			check_open_fd(char *path, int fd);
 char		*check_fd(int fd, char *tmp);
-void		print_debug(t_game *game);
 void		check_wall(t_game *game);
 void		check_is_solvable(int x, int y, t_game *game);
 void		check_valid_path(t_game *game);
 void		init_sprites(t_game *game);
+t_canvas	init_image(void *mlx, char *filepath);
+int			hook_exit(t_game *game);
+int			key_hook(int key, t_game *game);
+int			hook_move(t_vector new_pos, t_game *game);
+void		end_program(t_game *game);
+
+//--- GAME ---
+
+// INIT
 int			init_game(t_game *game);
 void		init_player(t_player *player, t_game *game);
 void		player_direction(t_player *player, t_game *game);
