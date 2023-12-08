@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/08 11:40:35 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:00:41 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	init_game(t_game *game)
 	game->image.addr = (int *)mlx_get_data_addr(game->image.img,
 			&game->image.pixel_bits,
 			&game->image.line_length, &game->image.endian);
-	printf("cam vals : %f %d\n", player.cam.camera_x, player.cam.start);
 	player.texture = init_texture(game);
 	game->floor = rgb_to_int(game->xpm.rgbf);
 	game->ceiling = rgb_to_int(game->xpm.rgbc);

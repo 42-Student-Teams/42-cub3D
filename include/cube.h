@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 11:39:38 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:51:26 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ int			hook_exit(t_game *game);
 int			key_hook(int key, t_game *game);
 int			hook_move(t_vector new_pos, t_game *game);
 void		end_program(t_game *game);
+
+//	PARSE UTILS
+void		is_player(t_game *game, int y, int x);
+void		fill_start_line(char *new);
+int			max_line_len(char *tmp, int max);
+void		print_map(t_game *game);
+
+
 
 //--- GAME ---
 

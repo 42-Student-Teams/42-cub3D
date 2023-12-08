@@ -6,34 +6,11 @@
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:14:01 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 14:14:03 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:45:39 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-static void	is_player(t_game *game, int y, int x)
-{
-	if (game->map[y][x] == PLAYER_N
-		|| game->map[y][x] == PLAYER_S
-		|| game->map[y][x] == PLAYER_W
-		|| game->map[y][x] == PLAYER_E)
-	{
-		game->playerpos.x = y;
-		game->playerpos.y = x;
-		game->cardinal = game->map[y][x];
-		game->map[y][x] = 0;
-	}
-}
-
-static void	fill_start_line(char *new)
-{
-	int		i;
-
-	i = -1;
-	while (new[++i] == ' ')
-		new[i] = ' ';
-}
 
 static void	fill_end_line(t_game *game, char *new, int i)
 {
@@ -80,30 +57,28 @@ static char	*fill_line(char *temp, t_game *game)
 
 void	generate_map(t_game *game, int fd, char *temp)
 {
-	int		x;
-	int		y;
-	char	*new_line;
+	t_vector	i;
+	char		*new_line;
 
-	x = 0;
-	y = 0;
+	ft_bzero(&i, sizeof(t_vector));
 	new_line = NULL;
 	while (temp)
 	{
 		if (temp[0] == '\n')
 			error("Empty line in map");
-		x = -1;
-		game->map[y] = ft_calloc(game->size.x, sizeof(int));
-		if (!game->map[y])
+		i.x = -1;
+		game->map[i.y] = ft_calloc(game->size.x, sizeof(int));
+		if (!game->map[i.y])
 			error("Malloc map failed");
 		new_line = fill_line(temp, game);
-		while (++x < game->size.x - 1)
+		while (++i.x < game->size.x - 1)
 		{
-			if (new_line[x] != '\n')
-				game->map[y][x] = check_elements(new_line[x], game);
-			is_player(game, y, x);
+			if (new_line[i.x] != '\n')
+				game->map[i.y][i.x] = check_elements(new_line[i.x], game);
+			is_player(game, i.y, i.x);
 		}
 		free(new_line);
-		y ++;
+		i.y ++;
 		temp = ft_get_next_line(fd);
 	}
 	close(fd);

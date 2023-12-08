@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 11:56:54 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:48:34 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-static int	max_line_len(char *tmp, int max)
-{
-	if ((int)ft_strlen(tmp) > max)
-		max = (int)ft_strlen(tmp);
-	return (max);
-}
-
-static void	print_map(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < game->size.y)
-	{
-		x = 0;
-		while (x < game->size.x - 1)
-		{
-			printf("%i", game->map[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
 
 static char	*skip_to_map(int fd, char *tmp)
 {
