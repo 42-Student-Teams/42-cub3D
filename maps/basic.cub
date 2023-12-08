@@ -1,14 +1,15 @@
 
-                        NO                      ./maps/textures/eagle.xpm
+F 70,70,70
 
 
 WE ./maps/textures/purplestone.xpm
 EA ./maps/textures/tonneau.xpm
 
-F 70,70,70
-C 0, 255, 204
-                                                                         SO                      ./maps/textures/red.xpm
+                        NO                      ./maps/textures/eagle.xpm
+C    0, 255, 204
+                SO                      ./maps/textures/red.xpm
 
+                        
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001

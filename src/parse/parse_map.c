@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 19:06:29 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:29:45 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static int	is_map_filled_walls(t_game *game)
 		x = -1;
 		while (++x < game->size.x - 1)
 		{
-			printf("%i", game->map[y][x]);
 			if (game->map[y][x] == FLOOR)
 			{
 				if (y == 0 || y == game->size.y
@@ -79,7 +78,6 @@ static int	is_map_filled_walls(t_game *game)
 					return (-1);
 			}
 		}
-		printf("\n");
 	}
 	return (0);
 }
@@ -114,7 +112,6 @@ int	init_map_size(char *path, t_game *game)
 	fd = check_open_fd(path, fd);
 	tmp = check_fd(fd, tmp);
 	cpt = 0;
-	printf("HELL\n");
 	while (tmp)
 	{
 		if (tmp[0] == '\n')
@@ -126,16 +123,13 @@ int	init_map_size(char *path, t_game *game)
 		{
 			if (check_valid_line(tmp) == 0)
 			{
-				printf("%s\n", tmp);
 				game->size.x = max_line_len(tmp, game->size.x);
 				cpt++;
-
 			}
 			free(tmp);
 			tmp = ft_get_next_line(fd);
 		}
 	}
-	printf("Map size: %d x %d\n", game->size.x, cpt);
 	close(fd);
 	return (cpt);
 }

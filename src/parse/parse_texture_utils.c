@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 19:16:10 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:22:48 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*skip_spaces_safe(char *temp)
 		i++;
 	while (temp[i] && !ft_isspace(temp[i]))
 		str[j++] = temp[i++];
+	if (str[0] == 'F' || str[0] == 'C')
+		str[1] = ' ';
 	free(temp);
 	return (str);
 }
@@ -48,7 +50,7 @@ void	init_cardinal_cpt(int cpt[4])
 
 void	skip_line(char **temp, int fd)
 {
-	if (*temp[0] == '\n')
+	while (*temp && *temp[0] == '\n')
 	{
 		free(*temp);
 		*temp = ft_get_next_line(fd);
@@ -73,6 +75,10 @@ void	check_texture(char *temp)
 		&& (ft_strcmp("EA", str))
 		&& (ft_strcmp("F ", str))
 		&& (ft_strcmp("C ", str)))
+	{
+		printf("str = %s'\n", str);
+		free(str);
 		error("Invalid texture");
+	}
 	free(str);
 }

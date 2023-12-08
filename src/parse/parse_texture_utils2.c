@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 19:17:27 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:18:25 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ void	check_min_max_colors(t_game *game)
 		error("Need 2 color textures");
 }
 
+char	*skip_spaces_safe2(char *temp)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	str = ft_calloc((int)ft_strlen(temp) + 1, sizeof(char));
+	if (!str)
+		error("malloc error");
+	i = 0;
+	j = 0;
+	while (ft_isspace(temp[i]))
+		i++;
+	while (temp[i])
+		str[j++] = temp[i++];
+	free(temp);
+	return (str);
+}
+
 void	get_texture(char *temp, int fd, t_game *game)
 {
 	int	cpt[4];
@@ -30,10 +49,18 @@ void	get_texture(char *temp, int fd, t_game *game)
 	while (temp && cpt[0] < 2 && cpt[1] < 2 && cpt[2] < 2 && cpt[3] < 2)
 	{
 		skip_line(&temp, fd);
-		skip_spaces(&temp);
+		temp = skip_spaces_safe2(temp);
 		i = set_texture(temp, game, cpt, i);
 		if (i < 6)
+		{
 			check_texture(temp);
+			free(temp);
+		}
+		if (i == 6)
+		{
+			free(temp);
+			break ;
+		}
 		temp = ft_get_next_line(fd);
 	}
 	check_min_max_texture(cpt);

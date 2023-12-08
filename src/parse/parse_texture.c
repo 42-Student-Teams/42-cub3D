@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:34:05 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:13:41 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_rgb	get_color_value(char *str)
 		++i;
 	}
 	free(temp);
-	free(str);
 	return (new_rgb);
 }
 
@@ -75,6 +74,16 @@ void	check_files(t_game *game)
 	check_file_exist(game->xpm.we);
 	check_file_exist(game->xpm.ea);
 }
+
+// static void	free_paths(t_game *game)
+// {
+// 	free(game->xpm.no);
+// 	free(game->xpm.so);
+// 	free(game->xpm.we);
+// 	free(game->xpm.ea);
+// 	free(game->xpm.floor);
+// 	free(game->xpm.ceiling);
+// }
 
 void	parse_texture(char *file, t_game *game)
 {
