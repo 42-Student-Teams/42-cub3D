@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 16:19:50 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:38:14 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ void		init_cardinal_cpt(int cpt[4]);
 void		skip_line(char **temp, int fd);
 void		check_texture(char *temp);
 void		copy_result(char *str, char *result, int count, int j);
-
+int         ft_isspace(char c);
 #endif

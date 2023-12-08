@@ -3,23 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 15:51:31 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:06:29 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
+static int	check_valid_line(char *tmp)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = (int)ft_strlen(tmp);
+	while (ft_isspace(tmp[i]))
+		i++;
+	while (i < len - 1)
+	{
+		if (tmp[i] != '1' && tmp[i] != '0' && tmp[i] != ' ' && tmp[i] != 'N' && tmp[i] != 'S' && tmp[i] != 'E' && tmp[i] != 'W')
+		{
+			// printf("Invalid character in map: %c\n", tmp[i]);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static char	*skip_to_map(int fd, char *tmp)
 {
 	while (tmp)
 	{
-		if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == '2' || tmp[0] == ' ')
-			return (tmp);
-		free(tmp);
-		tmp = ft_get_next_line(fd);
+		if (tmp[0] == '\n')
+		{
+			free(tmp);
+			tmp = ft_get_next_line(fd);
+		}
+		else
+		{
+			if (check_valid_line(tmp) == 0)
+				return (tmp);
+			free(tmp);
+			tmp = ft_get_next_line(fd);
+		}
 	}
 	return (NULL);
 }
@@ -30,11 +59,13 @@ static int	is_map_filled_walls(t_game *game)
 	int	y;
 
 	y = -1;
-	while (++y < game->size.y)
+
+	while (++y < game->size.y -1)
 	{
 		x = -1;
 		while (++x < game->size.x - 1)
 		{
+			printf("%i", game->map[y][x]);
 			if (game->map[y][x] == FLOOR)
 			{
 				if (y == 0 || y == game->size.y
@@ -48,6 +79,7 @@ static int	is_map_filled_walls(t_game *game)
 					return (-1);
 			}
 		}
+		printf("\n");
 	}
 	return (0);
 }
@@ -82,16 +114,28 @@ int	init_map_size(char *path, t_game *game)
 	fd = check_open_fd(path, fd);
 	tmp = check_fd(fd, tmp);
 	cpt = 0;
+	printf("HELL\n");
 	while (tmp)
 	{
-		if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == '2' || tmp[0] == ' ')
+		if (tmp[0] == '\n')
 		{
-			game->size.x = max_line_len(tmp, game->size.x);
-			cpt++;
+			free(tmp);
+			tmp = ft_get_next_line(fd);
 		}
-		free(tmp);
-		tmp = ft_get_next_line(fd);
+		else
+		{
+			if (check_valid_line(tmp) == 0)
+			{
+				printf("%s\n", tmp);
+				game->size.x = max_line_len(tmp, game->size.x);
+				cpt++;
+
+			}
+			free(tmp);
+			tmp = ft_get_next_line(fd);
+		}
 	}
+	printf("Map size: %d x %d\n", game->size.x, cpt);
 	close(fd);
 	return (cpt);
 }
