@@ -40,6 +40,8 @@ SRCS		:= \
 	src/game/init_game.c			\
 	src/game/calculs.c				\
 	src/game/draw.c					\
+	src/movement/move.c				\
+	src/movement/hook.c				\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
