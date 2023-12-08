@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 15:35:47 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:19:50 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,11 @@ int			key_hook(int key, t_game *game);
 int			hook_move(t_vector new_pos, t_game *game);
 void		end_program(t_game *game);
 
-
 //	PARSE UTILS
 void		is_player(t_game *game, int y, int x);
 void		fill_start_line(char *new_el);
 int			max_line_len(char *tmp, int max);
 void		print_map(t_game *game);
-
-//--- GAME ---
 
 // INIT
 int			init_game(t_game *game);

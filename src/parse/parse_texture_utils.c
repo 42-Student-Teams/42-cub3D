@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 16:05:52 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:21:39 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ char	*skip_spaces_safe(char *temp)
 	int		i;
 	int		j;
 	char	*str;
-
-
 
 	str = ft_calloc(4, sizeof(char));
 	if (!str)
@@ -67,7 +65,7 @@ void	check_texture(char *temp)
 	if (ft_strcmp("\n", str) == 0)
 	{
 		free(str);
-		return ;
+		return (NULL);
 	}
 	if (ft_strcmp("NO", str)
 		&& (ft_strcmp("SO", str))
