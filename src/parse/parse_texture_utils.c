@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 20:22:48 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:12:28 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	check_texture(char *temp)
 		&& (ft_strcmp("F ", str))
 		&& (ft_strcmp("C ", str)))
 	{
-		printf("str = %s'\n", str);
 		free(str);
 		error("Invalid texture");
 	}
