@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:48:51 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:52:18 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:57:18 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rotate_right(t_player *player)
 	double	old_plane_x;
 	double	rotspeed;
 
-	rotspeed = 0.033 * 0.9;
+	rotspeed = 0.033 * 2;
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(-rotspeed)
 		- player->dir.y * sin(-rotspeed);
@@ -49,7 +49,7 @@ void	rotate_left(t_player *player)
 	double	old_plane_x;
 	double	rotspeed;
 
-	rotspeed = 0.033 * 0.9;
+	rotspeed = 0.033 *2;
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(rotspeed)
 		- player->dir.y * sin(rotspeed);

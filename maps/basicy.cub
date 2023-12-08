@@ -1,30 +1,20 @@
-NO ./textures/wood.xpm     
+NO ./maps/textures/red.xpm     
 
 
 
 
 
 
-WE          ./textures/planks.xpm     
+WE          ./maps/textures/eagle.xpm     
 
 
 F                               70    ,  70    ,        70       
 
-EA              ./textures/redbrick.xpm     
-
-
-
-
-
-
-
-
-
-
+EA              ./maps/textures/tonneau.xpm     
 
 C 0, 255, 204
 
-SO ./textures/greystone.xpm
+SO ./maps/textures/greystone.xpm
 
 
 

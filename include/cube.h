@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
 /*   Updated: 2023/12/08 14:51:26 by bverdeci         ###   ########.fr       */
+=======
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
+/*   Updated: 2023/12/08 14:50:21 by lsaba-qu         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +109,32 @@ void		dda_algorithme(t_game *game, t_ray *ray, int *side);
 double		find_wall_dist(t_ray ray, int side);
 void		calculate_wall(t_cam *cam);
 void		walls_calculs(t_player *p, int side);
+
+// PARSE
+int			set_texture(char *temp, t_game *game, int cpt[4], int i);
+t_rgb		get_color_value(char *str);
+void		parse_files(t_game *game);
+void		check_files(t_game *game);
+void		parse_texture(char *file, t_game *game);
+void		check_min_max_texture(int cpt[4]);
+void		get_texture(char *temp, int fd, t_game *game);
+void		check_file_exist(char *path);
+void		remove_newline(char *str);
+void		skip_spaces(char **temp);
+char		*skip_spaces_safe(char *temp);
+void		check_color_rgb(t_rgb new_rgb);
+int			get_color_file(char *temp, t_game *game, int i);
+void		check_min_max_texture(int cpt[4]);
+void		check_min_max_colors(t_game *game);
+void		get_texture(char *temp, int fd, t_game *game);
+void		count_commas(char **rgb);
+char		*remove_all_spaces(char *str);
+t_rgb		big_trim(char **str);
+void		init_cardinal_cpt(int cpt[4]);
+void		skip_line(char **temp, int fd);
+void	    check_texture(char *temp);
+
+
+
 
 #endif
