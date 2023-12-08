@@ -30,37 +30,22 @@ INCS        := include		\
 
 SRC_DIR     := src
 SRCS		:= \
-<<<<<<< HEAD
-	src/main.c						\
-	src/message.c					\
-	src/check/check.c				\
-	src/check/check_utils.c			\
-	src/movement/hook.c				\
-	src/movement/move.c				\
-	src/parse/parse_map.c			\
-	src/parse/parse_texture.c		\
-	src/parse/init.c				\
-	src/parse/parse_utils.c			\
-	src/game/init_game.c			\
-	src/game/calculs.c				\
-	src/game/draw.c					\
-=======
 	src/main.c							\
 	src/message.c						\
-	src/init.c							\
 	src/check/check.c					\
 	src/check/check_utils.c				\
 	src/movement/hook.c					\
 	src/movement/move.c					\
 	src/parse/parse_map.c				\
 	src/parse/parse_texture.c			\
-	src/parse/parse_texture_utils.c		\
-	src/parse/parse_texture_utils2.c	\
-	src/parse/parse_texture_utils3.c	\
+	src/parse/init.c					\
+	src/parse/parse_utils.c				\
 	src/game/init_game.c				\
 	src/game/calculs.c					\
 	src/game/draw.c						\
->>>>>>> main
+	src/parse/parse_texture_utils.c		\
+	src/parse/parse_texture_utils2.c	\
+	src/parse/parse_texture_utils3.c	\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
