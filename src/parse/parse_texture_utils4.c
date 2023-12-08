@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture_utils4.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:24:49 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:54:44 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,23 @@ void	copy_result(char *str, char *result, int count, int j)
 		++count;
 	}
 	result[j] = '\0';
+}
+
+char	*skip_spaces_safe2(char *temp)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	str = ft_calloc((int)ft_strlen(temp) + 1, sizeof(char));
+	if (!str)
+		error("malloc error");
+	i = 0;
+	j = 0;
+	while (ft_isspace(temp[i]))
+		i++;
+	while (temp[i])
+		str[j++] = temp[i++];
+	free(temp);
+	return (str);
 }

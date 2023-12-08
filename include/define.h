@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 19:02:03 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:53:19 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,5 +145,12 @@ typedef struct s_player
 	int			tex_dir;
 
 }	t_player;
+
+typedef struct s_garb
+{
+	int		fd;
+	char	*tmp;
+	int		cpt;
+}	t_garb;
 
 #endif

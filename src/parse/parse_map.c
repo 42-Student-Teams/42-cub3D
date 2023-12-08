@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 20:29:45 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:52:50 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ static int	check_valid_line(char *tmp)
 		i++;
 	while (i < len - 1)
 	{
-		if (tmp[i] != '1' && tmp[i] != '0' && tmp[i] != ' ' && tmp[i] != 'N' && tmp[i] != 'S' && tmp[i] != 'E' && tmp[i] != 'W')
-		{
-			// printf("Invalid character in map: %c\n", tmp[i]);
+		if (tmp[i] != '1' && tmp[i] != '0' && tmp[i] != ' '
+			&& tmp[i] != 'N' && tmp[i] != 'S' && tmp[i] != 'E' && tmp[i] != 'W')
 			return (1);
-		}
 		i++;
 	}
 	return (0);
@@ -59,7 +57,6 @@ static int	is_map_filled_walls(t_game *game)
 	int	y;
 
 	y = -1;
-
 	while (++y < game->size.y -1)
 	{
 		x = -1;
@@ -103,33 +100,29 @@ void	parse_map(char *path, t_game *game)
 
 int	init_map_size(char *path, t_game *game)
 {
-	int		fd;
-	char	*tmp;
-	int		cpt;
+	t_garb	g;
 
-	tmp = NULL;
-	fd = 0;
-	fd = check_open_fd(path, fd);
-	tmp = check_fd(fd, tmp);
-	cpt = 0;
-	while (tmp)
+	ft_bzero(&g, sizeof(t_garb));
+	g.fd = check_open_fd(path, g.fd);
+	g.tmp = check_fd(g.fd, g.tmp);
+	while (g.tmp)
 	{
-		if (tmp[0] == '\n')
+		if (g.tmp[0] == '\n')
 		{
-			free(tmp);
-			tmp = ft_get_next_line(fd);
+			free(g.tmp);
+			g.tmp = ft_get_next_line(g.fd);
 		}
 		else
 		{
-			if (check_valid_line(tmp) == 0)
+			if (check_valid_line(g.tmp) == 0)
 			{
-				game->size.x = max_line_len(tmp, game->size.x);
-				cpt++;
+				game->size.x = max_line_len(g.tmp, game->size.x);
+				g.cpt++;
 			}
-			free(tmp);
-			tmp = ft_get_next_line(fd);
+			free(g.tmp);
+			g.tmp = ft_get_next_line(g.fd);
 		}
 	}
-	close(fd);
-	return (cpt);
+	close(g.fd);
+	return (g.cpt);
 }

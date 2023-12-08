@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 19:55:54 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:55:15 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,7 @@ void		init_cardinal_cpt(int cpt[4]);
 void		skip_line(char **temp, int fd);
 void		check_texture(char *temp);
 void		copy_result(char *str, char *result, int count, int j);
-int         ft_isspace(char c);
+int			ft_isspace(char c);
+char		*skip_spaces_safe2(char *temp);
+
 #endif
