@@ -6,19 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 15:24:16 by lsaba-qu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cube.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <leonel.sabaquezada@student.42    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 12:23:06 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/10/10 15:04:19 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:35:47 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +47,13 @@ int			hook_exit(t_game *game);
 int			key_hook(int key, t_game *game);
 int			hook_move(t_vector new_pos, t_game *game);
 void		end_program(t_game *game);
+
+
+//	PARSE UTILS
+void		is_player(t_game *game, int y, int x);
+void		fill_start_line(char *new_el);
+int			max_line_len(char *tmp, int max);
+void		print_map(t_game *game);
 
 //--- GAME ---
 

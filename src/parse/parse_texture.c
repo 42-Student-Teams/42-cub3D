@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:25:26 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:34:05 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	parse_files(t_game *game)
 	skip_spaces(&game->xpm.floor);
 	skip_spaces(&game->xpm.ceiling);
 	game->xpm.rgbc = get_color_value(game->xpm.floor);
-	printf("tout bon mec\n");
 	game->xpm.rgbf = get_color_value(game->xpm.ceiling);
 }
 
