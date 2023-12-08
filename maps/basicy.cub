@@ -1,14 +1,16 @@
-NO ./maps/textures/red.xpm     
 
-WE ./maps/textures/eagle.xpm     
 
-F 70, 70, 70                                                     
 
-EA ./maps/textures/tonneau.xpm     
 
+
+NO ./maps/textures/eagle.xpm
+SO ./maps/textures/red.xpm
+WE ./maps/textures/purplestone.xpm
+EA ./maps/textures/greystone.xpm
+
+F 70, 70,     70
 C 0, 255, 204
 
-SO ./maps/textures/greystone.xpm
 
 
 

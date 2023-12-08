@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:56:37 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:05:52 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	check_texture(char *temp)
 	str = ft_calloc(3, sizeof(char *));
 	str[0] = temp[0];
 	str[1] = temp[1];
+	if (ft_strcmp("\n", str) == 0)
+	{
+		free(str);
+		return ;
+	}
 	if (ft_strcmp("NO", str)
 		&& (ft_strcmp("SO", str))
 		&& (ft_strcmp("WE", str))
