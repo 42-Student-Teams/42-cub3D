@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:53:07 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 13:27:51 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:40:48 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,33 @@ void	draw_walls(int side, t_player *p, t_game *game, int x)
 		my_mlx_pixel_put(&game->image, x, p->cam.start, color);
 		p->cam.start++;
 	}
+}
+
+void	draw_map(t_game *game, t_player *p)
+{
+	int	x;
+	int	side;		
+
+	x = -1;
+	x = 0;
+	side = 0;
+	while (++x < SCREEN_W)
+	{
+		p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;
+		p->ray.dir.x = p->dir.x + p->plane.x * p->cam.camera_x;
+		p->ray.dir.y = p->dir.y + p->plane.y * p->cam.camera_x;
+		p->ray.square.x = (int)p->pos.x;
+		p->ray.square.y = (int)p->pos.y;
+		p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
+		p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
+		evaluate_ray(*p, &p->ray);
+		dda_algorithme(game, &p->ray, &side);
+		p->cam.wall_dist = find_wall_dist(p->ray, side);
+		calculate_wall(&p->cam);
+		draw_ceiling(&game->image, p->cam.start, x, game->ceiling);
+		draw_walls(side, p, game, x);
+		draw_floor(&game->image, p->cam.end, x, game->floor);
+	}
+	mlx_put_image_to_window(game->window.mlx, game->window.win,
+		game->image.img, 0, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/07 12:46:04 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:25:26 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define DEFINE_H
 
 //---- CONSTANTS ----
-# define SCREEN_W 1920
-# define SCREEN_H 1080
+# define SCREEN_W 1080
+# define SCREEN_H 720
 # define RED 0x00FF0000
 # define WHITE 0x00FFFFFF
 # define GREEN 0x228B22

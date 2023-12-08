@@ -3,36 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 14:10:57 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:40:35 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-/*	
-							:: TODO ::
-	
-	1. Plane x,y et dir x,y changent par rapport à la direction.
-	-> pour ça il me faut la direction de départ donc la lettre du joueur
-	-> N, S, W ou E 
-
-	2. La poition du joueur n'est pas gardé en mémoire.	
-	-> checker le moment ou les variables game.playerspos.x,y ont été initialisées.
-	
-*/
+void	player_direction(t_player *player, t_game *game)
+{
+	player->dir.x = 0.0;
+	player->dir.y = 1.0;
+	player->plane.x = 0.66;
+	player->plane.y = 0.0;
+	if (game->cardinal == PLAYER_N)
+	{
+		player->dir.x = -1.0;
+		player->dir.y = 0.0;
+		player->plane.x = 0;
+		player->plane.y = 0.66;
+	}
+	if (game->cardinal == PLAYER_S)
+	{
+		player->dir.x = 1.0;
+		player->dir.y = 0.0;
+		player->plane.x = 0;
+		player->plane.y = -0.66;
+	}
+	if (game->cardinal == PLAYER_W)
+	{
+		player->dir.x = 0.0;
+		player->dir.y = -1.0;
+		player->plane.x = -0.66;
+		player->plane.y = 0.0;
+	}
+}
 
 void	init_player(t_player *player, t_game *game)
 {
 	player->game = game;
 	player->pos.x = game->playerpos.x;
 	player->pos.y = game->playerpos.y;
-	player->dir.x = -1.0;
-	player->dir.y = 0.0;
-	player->plane.x = 0;
-	player->plane.y = 0.66;
+	player_direction(player, game);
 }
 
 t_canvas	*init_texture(t_game *game)
@@ -71,35 +85,6 @@ int	rgb_to_int(t_rgb rgb)
 	g = rgb.g;
 	b = rgb.b;
 	return (((r & 0x0ff) << 16) | ((g & 0x0ff) << 8) | (b & 0x0ff));
-}
-
-void	draw_map(t_game *game, t_player *p)
-{
-	int	x;
-	int	side;		
-
-	x = -1;
-	x = 0;
-	side = 0;
-	while (++x < SCREEN_W)
-	{
-		p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;
-		p->ray.dir.x = p->dir.x + p->plane.x * p->cam.camera_x;
-		p->ray.dir.y = p->dir.y + p->plane.y * p->cam.camera_x;
-		p->ray.square.x = (int)p->pos.x;
-		p->ray.square.y = (int)p->pos.y;
-		p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
-		p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
-		evaluate_ray(*p, &p->ray);
-		dda_algorithme(game, &p->ray, &side);
-		p->cam.wall_dist = find_wall_dist(p->ray, side);
-		calculate_wall(&p->cam);
-		draw_ceiling(&game->image, p->cam.start, x, game->ceiling);
-		draw_walls(side, p, game, x);
-		draw_floor(&game->image, p->cam.end, x, game->floor);
-	}
-	mlx_put_image_to_window(game->window.mlx, game->window.win,
-		game->image.img, 0, 0);
 }
 
 int	init_game(t_game *game)
