@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 11:18:41 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:53:02 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*skip_spaces_safe(char *temp)
 	int		j;
 	char	*str;
 
-	str = ft_calloc(5, sizeof(char));
+	str = ft_calloc(4, sizeof(char));
 	if (!str)
 		error("malloc error");
 	i = 0;
@@ -199,10 +199,18 @@ static char	*remove_all_spaces(char *str)
 static t_rgb	big_trim(char **str)
 {
 	t_rgb	rgb;
+	char *temp;
 
-	rgb.r = ft_atoi(remove_all_spaces(str[0]));
-	rgb.g = ft_atoi(remove_all_spaces(str[1]));
-	rgb.b = ft_atoi(remove_all_spaces(str[2]));
+	temp = NULL;
+	temp = remove_all_spaces(str[0]);
+	rgb.r = ft_atoi(temp);
+	free(temp);
+	temp = remove_all_spaces(str[1]);
+	rgb.g = ft_atoi(temp);
+	free(temp);
+	temp = remove_all_spaces(str[2]);
+	rgb.b = ft_atoi(temp);
+	free(temp);
 	return (rgb);
 }
 
@@ -230,7 +238,14 @@ static t_rgb get_color_value(char *str)
 	count_commas(temp);
 	new_rgb = big_trim(temp);
 	check_color_rgb(new_rgb);
+	int i = 0;
+	while (temp[i])
+	{
+		free(temp[i]);
+		++i;
+	}
 	free(temp);
+	free(str);
 	return (new_rgb);
 }
 
