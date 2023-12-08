@@ -46,6 +46,7 @@ SRCS		:= \
 	src/parse/parse_texture_utils.c		\
 	src/parse/parse_texture_utils2.c	\
 	src/parse/parse_texture_utils3.c	\
+	src/parse/parse_texture_utils4.c	\
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
