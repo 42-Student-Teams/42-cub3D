@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 14:50:21 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:24:16 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,7 @@ char		*remove_all_spaces(char *str);
 t_rgb		big_trim(char **str);
 void		init_cardinal_cpt(int cpt[4]);
 void		skip_line(char **temp, int fd);
-void	    check_texture(char *temp);
-
-
-
+void		check_texture(char *temp);
+void		copy_result(char *str, char *result, int count, int j);
 
 #endif
