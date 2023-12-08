@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/07 16:48:26 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:18:41 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,12 +220,10 @@ static t_rgb get_color_value(char *str)
 {
 	t_rgb	new_rgb;
 	char	**temp;
-	int		i;
 
 	printf("RGB line : %s\n", str);
 	new_rgb = (t_rgb){0, 0, 0};
 	temp = ft_split(str, ',');
-	i = 0;
 	temp[0] = skip_spaces_safe(temp[0]);
 	temp[1] = skip_spaces_safe(temp[1]);
 	temp[2] = skip_spaces_safe(temp[2]);
