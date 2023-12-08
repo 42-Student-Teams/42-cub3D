@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:25:19 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:51:48 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_texture(char *temp, int fd, t_game *game)
 		i = set_texture(temp, game, cpt, i);
 		if (i < 6)
 			check_texture(temp);
-		free(temp);
+		// free(temp);
 		temp = ft_get_next_line(fd);
 	}
 	check_min_max_texture(cpt);

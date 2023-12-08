@@ -6,7 +6,7 @@
 /*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:50 by leon              #+#    #+#             */
-/*   Updated: 2023/12/08 15:06:19 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:54:47 by lsaba-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ char	*skip_spaces_safe(char *temp)
 	int		j;
 	char	*str;
 
-	str = ft_calloc(5, sizeof(char));
+
+
+	str = ft_calloc(4, sizeof(char));
 	if (!str)
 		error("malloc error");
 	i = 0;
 	j = 0;
 	while (ft_isspace(temp[i]))
 		i++;
-	while (temp[i])
+	while (temp[i] && !ft_isspace(temp[i]))
 		str[j++] = temp[i++];
 	free(temp);
 	printf("len : %lu\n", strlen(str));

@@ -1,23 +1,14 @@
 NO ./maps/textures/red.xpm     
 
+WE ./maps/textures/eagle.xpm     
 
+F 70, 70, 70                                                     
 
-
-
-
-WE          ./maps/textures/eagle.xpm     
-
-
-F                               70    ,  70    ,        70       
-
-EA              ./maps/textures/tonneau.xpm     
+EA ./maps/textures/tonneau.xpm     
 
 C 0, 255, 204
 
 SO ./maps/textures/greystone.xpm
-
-
-
 
 
 
@@ -34,4 +25,4 @@ SO ./maps/textures/greystone.xpm
 10000000000000001101010010001
 11000001110101011111011110N0111
 11110111 1110101 101111010001
-11111111 1111111 111111111111
+11111111 1111111 1111111111111111
