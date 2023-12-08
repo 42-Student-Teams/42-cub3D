@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:07:59 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 14:48:34 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:42:32 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parse_map(char *path, t_game *game)
 	check_min_amount(game);
 	if (is_map_filled_walls(game))
 		error("Map is not surrounded by walls");
-	print_map(game);
+	// print_map(game);
 }
 
 int	init_map_size(char *path, t_game *game)

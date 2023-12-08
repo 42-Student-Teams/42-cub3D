@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:54:52 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/07 00:51:55 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:43:26 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void	calculate_wall(t_cam *cam)
 
 	line_height = (int)((double)SCREEN_H / cam->wall_dist);
 	cam->start = -line_height / 2 + SCREEN_H / 2;
-	if (cam->start < 0)
+	if (cam->start < 0 || cam->wall_dist == 0.0)
 		cam->start = 0;
 	cam->end = line_height / 2 + SCREEN_H / 2;
-	if (cam->end >= SCREEN_H)
+	if (cam->end >= SCREEN_H || cam->wall_dist == 0.0)
 		cam->end = SCREEN_H - 1;
 }
 
