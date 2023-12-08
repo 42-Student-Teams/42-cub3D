@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:53:07 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/08 11:40:48 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:41:39 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	draw_ceiling(t_canvas *img, int val, int x, int color)
 
 	i = -1;
 	while (++i < val)
+	{
 		my_mlx_pixel_put(img, x, i, color);
+	}
 }
 
 void	draw_floor(t_canvas *img, int val, int x, int color)
