@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/09 11:14:37 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 13:18:49 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int			close_window(t_game *game);
 int			key_press(int keycode, t_player *player);
 int			key_release(int keycode, t_player *player);
 
-
 // MOVE
 void		go_straight(t_player *player);
 void		go_back(t_player *player);
@@ -75,7 +74,6 @@ void		rotate_left(t_player *player);
 void		go_left(t_player *player);
 void		go_right(t_player *player);
 void		move(t_player *p);
-
 
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
