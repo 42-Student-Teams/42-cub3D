@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 13:57:21 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:14:03 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	move(t_player *p)
+{
+	if (p->front == 1)
+		go_straight(p);
+	if (p->back == 1)
+		go_back(p);
+	if (p->left == 1)
+		go_left(p);
+	if (p->right == 1)
+		go_right(p);
+	if (p->r_left == 1)
+		rotate_left(p);
+	if (p->r_right == 1)
+		rotate_right(p);
+}
 
 void	go_straight(t_player *player)
 {
@@ -24,6 +40,8 @@ void	go_straight(t_player *player)
 		+ player->dir.y * movspeed)] == 0)
 		player->pos.y += player->dir.y * movspeed;
 }
+
+
 
 int	key_event(int keycode, t_player *player)
 {	
@@ -47,7 +65,45 @@ int	key_event(int keycode, t_player *player)
 		rotate_right(player);
 	if (keycode == KEYCODE_LEFT_ARROW)
 		rotate_left(player);
-	draw_map(player->game, player);
+	draw_map(player);
+	return (0);
+}
+
+int	key_press(int keycode, t_player *player)
+{	
+	if (keycode == KEYCODE_ESC)
+		close_window(player->game);
+	if (keycode == KEYCODE_W)
+		player->front = 1;
+	if (keycode == KEYCODE_S)
+		player->back = 1;
+	if (keycode == KEYCODE_A)
+		player->left = 1;
+	if (keycode == KEYCODE_D)
+		player->right = 1;
+	if (keycode == KEYCODE_RIGHT_ARROW)
+		player->r_right = 1;
+	if (keycode == KEYCODE_LEFT_ARROW)
+		player->r_left = 1;
+	return (0);
+}
+
+int	key_release(int keycode, t_player *player)
+{	
+	if (keycode == KEYCODE_ESC)
+		close_window(player->game);
+	if (keycode == KEYCODE_W)
+		player->front = 0;
+	if (keycode == KEYCODE_S)
+		player->back = 0;
+	if (keycode == KEYCODE_A)
+		player->left = 0;
+	if (keycode == KEYCODE_D)
+		player->right = 0;
+	if (keycode == KEYCODE_RIGHT_ARROW)
+		player->r_right = 0;
+	if (keycode == KEYCODE_LEFT_ARROW)
+		player->r_left = 0;
 	return (0);
 }
 

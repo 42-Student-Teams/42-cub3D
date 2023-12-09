@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:24:10 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 20:53:19 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 10:55:40 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,12 @@ typedef struct s_player
 	int			tex_y;
 	int			line_height;
 	int			tex_dir;
-
+	int			front;
+	int			back;
+	int			left;
+	int			right;
+	int			r_left;
+	int			r_right;
 }	t_player;
 
 typedef struct s_garb

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsaba-qu <lsaba-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:53:07 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/08 20:28:09 by lsaba-qu         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:15:24 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ void	draw_walls(int side, t_player *p, t_game *game, int x)
 	}
 }
 
-void	draw_map(t_game *game, t_player *p)
+int	draw_map(t_player *p)
 {
 	int	x;
 	int	side;		
 
 	x = -1;
-	x = 0;
 	side = 0;
 	while (++x < SCREEN_W)
 	{
@@ -71,13 +70,15 @@ void	draw_map(t_game *game, t_player *p)
 		p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
 		p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
 		evaluate_ray(*p, &p->ray);
-		dda_algorithme(game, &p->ray, &side);
+		dda_algorithme(p->game, &p->ray, &side);
 		p->cam.wall_dist = find_wall_dist(p->ray, side);
 		calculate_wall(&p->cam);
-		draw_ceiling(&game->image, p->cam.start, x, game->ceiling);
-		draw_walls(side, p, game, x);
-		draw_floor(&game->image, p->cam.end, x, game->floor);
+		draw_ceiling(&p->game->image, p->cam.start, x, p->game->ceiling);
+		draw_walls(side, p, p->game, x);
+		draw_floor(&p->game->image, p->cam.end, x, p->game->floor);
 	}
-	mlx_put_image_to_window(game->window.mlx, game->window.win,
-		game->image.img, 0, 0);
+	mlx_put_image_to_window(p->game->window.mlx, p->game->window.win,
+		p->game->image.img, 0, 0);
+	move(p);
+	return (0);
 }

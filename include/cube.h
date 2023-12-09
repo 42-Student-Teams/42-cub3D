@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:16 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/08 20:55:15 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:14:37 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ t_canvas	*init_texture(t_game *game);
 // HOOK
 int			key_event(int keycode, t_player *player);
 int			close_window(t_game *game);
+int			key_press(int keycode, t_player *player);
+int			key_release(int keycode, t_player *player);
+
 
 // MOVE
 void		go_straight(t_player *player);
@@ -71,10 +74,12 @@ void		rotate_right(t_player *player);
 void		rotate_left(t_player *player);
 void		go_left(t_player *player);
 void		go_right(t_player *player);
+void		move(t_player *p);
+
 
 // DRAW
 void		my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-void		draw_map(t_game *game, t_player *p);
+int			draw_map(t_player *p);
 void		draw_floor(t_canvas *img, int val, int x, int color);
 void		draw_ceiling(t_canvas *img, int val, int x, int color);
 void		draw_walls(int side, t_player *p, t_game *game, int x);

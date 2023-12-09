@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bverdeci <bverdeci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:47 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/08 15:00:41 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:17:40 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,11 @@ int	init_game(t_game *game)
 	game->floor = rgb_to_int(game->xpm.rgbf);
 	game->ceiling = rgb_to_int(game->xpm.rgbc);
 	init_player(&player, game);
-	draw_map(game, &player);
-	mlx_key_hook(game->window.win, key_event, &player);
+	draw_map(&player);
 	mlx_hook(game->window.win, ON_DESTROY, 0, close_window, game);
-	mlx_hook(game->window.win, ON_KEYDOWN, 0, key_event, &player);
+	mlx_hook(game->window.win, ON_KEYDOWN, 0, key_press, &player);
+	mlx_loop_hook(game->window.mlx, draw_map, &player);
+	mlx_hook(game->window.win, ON_KEYUP, 0, key_release, &player);
 	mlx_loop(game->window.mlx);
 	exit (0);
 }
