@@ -6,16 +6,11 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:53:07 by bverdeci          #+#    #+#             */
-/*   Updated: 2023/12/09 11:15:24 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:26:14 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
-{
-	data->addr[y * data->line_length / 4 + x] = color;
-}
 
 void	draw_ceiling(t_canvas *img, int val, int x, int color)
 {
@@ -53,6 +48,17 @@ void	draw_walls(int side, t_player *p, t_game *game, int x)
 	}
 }
 
+static void	set_evaluation_values(t_player *p, int x)
+{
+	p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;
+	p->ray.dir.x = p->dir.x + p->plane.x * p->cam.camera_x;
+	p->ray.dir.y = p->dir.y + p->plane.y * p->cam.camera_x;
+	p->ray.square.x = (int)p->pos.x;
+	p->ray.square.y = (int)p->pos.y;
+	p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
+	p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
+}
+
 int	draw_map(t_player *p)
 {
 	int	x;
@@ -62,13 +68,7 @@ int	draw_map(t_player *p)
 	side = 0;
 	while (++x < SCREEN_W)
 	{
-		p->cam.camera_x = 2 * x / (double)(SCREEN_W) - 1;
-		p->ray.dir.x = p->dir.x + p->plane.x * p->cam.camera_x;
-		p->ray.dir.y = p->dir.y + p->plane.y * p->cam.camera_x;
-		p->ray.square.x = (int)p->pos.x;
-		p->ray.square.y = (int)p->pos.y;
-		p->ray.delta_dist.x = fabs(1 / p->ray.dir.x);
-		p->ray.delta_dist.y = fabs(1 / p->ray.dir.y);
+		set_evaluation_values(p, x);
 		evaluate_ray(*p, &p->ray);
 		dda_algorithme(p->game, &p->ray, &side);
 		p->cam.wall_dist = find_wall_dist(p->ray, side);

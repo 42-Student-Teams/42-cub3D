@@ -6,7 +6,7 @@
 /*   By: bverdeci <bverdeci@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:44:24 by lsaba-qu          #+#    #+#             */
-/*   Updated: 2023/12/09 11:14:03 by bverdeci         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:23:08 by bverdeci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,6 @@ void	go_straight(t_player *player)
 	if (player->game->map[(int)player->pos.x][(int)(player->pos.y
 		+ player->dir.y * movspeed)] == 0)
 		player->pos.y += player->dir.y * movspeed;
-}
-
-
-
-int	key_event(int keycode, t_player *player)
-{	
-	mlx_destroy_image(player->game->window.mlx, player->game->image.img);
-	player->game->image.img = mlx_new_image(player->game->window.mlx,
-			SCREEN_W, SCREEN_H);
-	player->game->image.addr = (int *)mlx_get_data_addr
-		(player->game->image.img, &player->game->image.pixel_bits,
-			&player->game->image.line_length, &player->game->image.endian);
-	if (keycode == KEYCODE_ESC)
-		close_window(player->game);
-	if (keycode == KEYCODE_W)
-		go_straight(player);
-	if (keycode == KEYCODE_S)
-		go_back(player);
-	if (keycode == KEYCODE_A)
-		go_left(player);
-	if (keycode == KEYCODE_D)
-		go_right(player);
-	if (keycode == KEYCODE_RIGHT_ARROW)
-		rotate_right(player);
-	if (keycode == KEYCODE_LEFT_ARROW)
-		rotate_left(player);
-	draw_map(player);
-	return (0);
 }
 
 int	key_press(int keycode, t_player *player)
