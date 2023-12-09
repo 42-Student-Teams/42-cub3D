@@ -1,7 +1,7 @@
-NO ./textures/wood.xpm
-SO ./textures/greystone.xpm
-WE ./textures/planks.xpm
-EA ./textures/redbrick.xpm
+NO ./maps/textures/eagle.xpm
+SO ./maps/textures/red.xpm
+WE ./maps/textures/purplestone.xpm
+EA ./maps/textures/greystone.xpm
 
 F 70,70,70
 C 0, 255, 204
